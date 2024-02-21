@@ -7,20 +7,14 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
-import CourseCardSmall from "./CourseCardSmall";
+import CourseSectionCard from "../components/CourseSectionCard";
 
-const PotentialCourse = () => {
+const CourseSection = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Popular Courses</Text>
-        <TouchableOpacity>
-          <Text>Show all</Text>
-        </TouchableOpacity>
-      </View>
       <FlatList
-        data={[1, 2, 3, 4, 5]}
-        renderItem={({ item }) => <CourseCardSmall item={item} />}
+        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        renderItem={({ item }) => <CourseSectionCard item={item} />}
         keyExtractor={(item) => item.id}
         key={(item) => item.id}
         contentContainerStyle={{ rowGap: 10 }}
@@ -48,4 +42,4 @@ const styles = StyleSheet.create({
   search: {},
 });
 
-export default PotentialCourse;
+export default CourseSection;

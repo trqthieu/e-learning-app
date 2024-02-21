@@ -1,7 +1,7 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import SearchBar from '../components/SearchBar';
-import PopularCourse from '../components/PopularCourse';
-import PotentialCourse from '../components/PotentialCourse';
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import SearchBar from "../components/SearchBar";
+import PopularCourse from "../components/PopularCourse";
+import PotentialCourse from "../components/PotentialCourse";
 
 export default function Page() {
   return (
@@ -18,12 +18,13 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    flex: 1,
   },
   welcome: {
     fontSize: 16,
   },
   title: {
     fontSize: 24,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 });
