@@ -3,13 +3,28 @@ import { StyleSheet, Text, View } from "react-native";
 import CourseLesson from "../../components/CourseLesson";
 import CourseExercise from "../../components/CourseExercise";
 import Tabs from "../../components/Tabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import instance from "../../axios-instance";
 const tabs = ["Lesson", "Exercise"];
 
 export default function Page() {
   const item = useLocalSearchParams();
   const [activeTab, setActiveTab] = useState(tabs[0]);
-  console.log("activeTab", activeTab);
+  const [data, setData] = useState([]);
+  const [dataEx, setDataEx] = useState([]);
+  const fetchCourses = async () => {
+    const data = await instance.get("/lessons", {
+      params: { courseUnitId: item.unitId },
+    });
+    setData(data?.data?.data || []);
+    const dataEx = await instance.get("/exercises", {
+      params: { courseUnitId: item.unitId },
+    });
+    setDataEx(dataEx?.data?.data || []);
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
   const displayTabContent = () => {
     switch (activeTab) {
       case "Exercise":
@@ -19,7 +34,7 @@ export default function Page() {
               flex: 1,
             }}
           >
-            <CourseExercise />
+            <CourseExercise data={dataEx}/>
           </View>
         );
       case "Lesson":
@@ -29,14 +44,13 @@ export default function Page() {
               flex: 1,
             }}
           >
-            <CourseLesson />
+            <CourseLesson data={data}/>
           </View>
         );
       default:
         return null;
     }
   };
-  console.log(item);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Course unit detail</Text>

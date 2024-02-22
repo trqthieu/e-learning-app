@@ -9,11 +9,11 @@ import {
   import React from "react";
   import CourseLessonCard from "../components/CourseLessonCard";
   
-  const CourseSection = () => {
+  const CourseSection = ({data}) => {
     return (
       <View style={styles.container}>
         <FlatList
-          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          data={data}
           renderItem={({ item }) => <CourseLessonCard item={item} />}
           keyExtractor={(item) => item.id}
           key={(item) => item.id}

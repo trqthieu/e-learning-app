@@ -1,72 +1,67 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Tabs from "../../components/Tabs";
-const tabs = ["About", "Qualifications", "Responsibilities"];
+const tabs = ["Description", "Target", "Guideline"];
 import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import instance from "../../axios-instance";
+import { convertTime } from "../../utils";
 
 const CourseDetail = () => {
+  const local = useLocalSearchParams();
+  const [data, setData] = useState();
+  const fetchCourse = async () => {
+    const data = await instance.get(`/courses/${local.id}`);
+    setData(data?.data || null);
+  };
+  useEffect(() => {
+    fetchCourse();
+  }, []);
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const displayTabContent = () => {
     switch (activeTab) {
-      case "Qualifications":
+      case "Target":
         return (
-          <Text
-            style={{
-              textAlign: "justify",
-            }}
-          >
-            Qualifications: It is a long established fact that a reader will be
-            distracted by the readable content of a page when looking at its
-            layout. The point of using Lorem Ipsum is that it has a more-or-less
-            normal distribution of letters, as opposed to using 'Content here,
-            content here', making it look like readable English. Many desktop
-            publishing packages and web page editors now use Lorem Ipsum as
-            their default model text, and a search for 'lorem ipsum' will
-            uncover many web sites still in their infancy. Various versions have
-            evolved over the years, sometimes by accident, sometimes on purpose
-            (injected humour and the like).
-          </Text>
+          <View>
+            {data?.target?.map((item) => (
+              <Text
+                style={{
+                  textAlign: "justify",
+                  marginTop: 5,
+                }}
+              >
+                {item}
+              </Text>
+            ))}
+          </View>
         );
-      case "About":
+      case "Description":
         return (
-          <Text
-            style={{
-              textAlign: "justify",
-            }}
-          >
-            About: It is a long established fact that a reader will be
-            distracted by the readable content of a page when looking at its
-            layout. The point of using Lorem Ipsum is that it has a more-or-less
-            normal distribution of letters, as opposed to using 'Content here,
-            content here', making it look like readable English. Many desktop
-            publishing packages and web page editors now use Lorem Ipsum as
-            their default model text, and a search for 'lorem ipsum' will
-            uncover many web sites still in their infancy. Various versions have
-            evolved over the years, sometimes by accident, sometimes on purpose
-            (injected humour and the like).
-          </Text>
+          <View>
+            {data?.description?.map((item) => (
+              <Text
+                style={{
+                  textAlign: "justify",
+                  marginTop: 5,
+                }}
+              >
+                {item}
+              </Text>
+            ))}
+          </View>
         );
-      case "Responsibilities":
+      case "Guideline":
         return (
           <Text
             style={{
               textAlign: "justify",
+              marginTop: 5,
             }}
           >
-            Responsibilities: It is a long established fact that a reader will
-            be distracted by the readable content of a page when looking at its
-            layout. The point of using Lorem Ipsum is that it has a more-or-less
-            normal distribution of letters, as opposed to using 'Content here,
-            content here', making it look like readable English. Many desktop
-            publishing packages and web page editors now use Lorem Ipsum as
-            their default model text, and a search for 'lorem ipsum' will
-            uncover many web sites still in their infancy. Various versions have
-            evolved over the years, sometimes by accident, sometimes on purpose
-            (injected humour and the like).
+            {data.guideline}
           </Text>
         );
       default:
@@ -82,7 +77,7 @@ const CourseDetail = () => {
     >
       <Image
         source={{
-          uri: "https://www.freecodecamp.org/news/content/images/2023/04/reactnative.png",
+          uri: data?.banner,
         }}
         style={{
           resizeMode: "contain",
@@ -98,14 +93,15 @@ const CourseDetail = () => {
             fontWeight: 500,
           }}
         >
-          React Native
+          {data?.name}
         </Text>
         <Text
           style={{
             marginTop: 5,
           }}
         >
-          David John - Beginner
+          {`${data?.teacher?.firstName} ${data?.teacher?.lastName}`} -{" "}
+          {data?.level}
         </Text>
         <View
           style={{
@@ -169,7 +165,7 @@ const CourseDetail = () => {
                 marginLeft: 5,
               }}
             >
-              2 hours 30 minutes
+              {convertTime(data?.duration)}
             </Text>
           </View>
         </View>
@@ -203,7 +199,10 @@ const CourseDetail = () => {
             paddingVertical: 10,
           }}
           onPress={() =>
-            router.push({ pathname: `/course-section`, params: { courseId: 1 } })
+            router.push({
+              pathname: `/course-section`,
+              params: { courseId: data?.id },
+            })
           }
         >
           <Text

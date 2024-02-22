@@ -2,14 +2,12 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 
-const CourseCard = () => {
+const CourseCard = ({ item }) => {
   return (
-    <TouchableOpacity 
-    onPress={() => router.push(`/course/1`)}
-    >
+    <TouchableOpacity onPress={() => router.push(`/course/${item.id}`)}>
       <Image
         source={{
-          uri: "https://www.freecodecamp.org/news/content/images/2023/04/reactnative.png",
+          uri: item.banner,
         }}
         style={{
           resizeMode: "contain",
@@ -18,8 +16,8 @@ const CourseCard = () => {
           borderRadius: 20,
         }}
       />
-      <Text style={styles.courseName}>React Native</Text>
-      <Text>Teacher Name - Beginner</Text>
+      <Text style={styles.courseName}>{item.name}</Text>
+      <Text>{`${item.teacher.firstName} ${item.teacher.lastName}`} - {item.level}</Text>
     </TouchableOpacity>
   );
 };

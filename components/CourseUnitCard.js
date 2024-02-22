@@ -7,7 +7,7 @@ const CourseCardSmall = ({ item }) => {
     <TouchableOpacity
       style={styles.container}
       onPress={() =>
-        router.push({ pathname: "/course-unit-detail", params: { unitId: 1 } })
+        router.push({ pathname: "/course-unit-detail", params: { unitId: item?.id } })
       }
     >
       <Image
@@ -22,8 +22,8 @@ const CourseCardSmall = ({ item }) => {
         }}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.courseName}>React Native Unit</Text>
-        <Text>Teacher Name - Beginner</Text>
+        <Text style={styles.courseName}>{item?.title}</Text>
+        <Text>{item?.description} - {item?.lessons?.length} lessons</Text>
       </View>
     </TouchableOpacity>
   );

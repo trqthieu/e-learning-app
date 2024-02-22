@@ -1,14 +1,27 @@
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import CourseSection from "../../components/CourseSection";
+import { useEffect, useState } from "react";
+import instance from "../../axios-instance";
 
 export default function Page() {
   const item = useLocalSearchParams();
-  console.log(item);
+  const [data, setData] = useState([]);
+  const fetchCourses = async () => {
+    const data = await instance.get("/course-sections", {
+      params: {
+        courseId: item.courseId,
+      },
+    });
+    setData(data?.data?.data || []);
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Course section list</Text>
-      <CourseSection />
+      <CourseSection data={data}/>
     </View>
   );
 }

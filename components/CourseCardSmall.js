@@ -6,7 +6,7 @@ const CourseCardSmall = ({ item }) => {
     <TouchableOpacity style={styles.container}>
       <Image
         source={{
-          uri: 'https://www.freecodecamp.org/news/content/images/2023/04/reactnative.png',
+          uri: item.banner,
         }}
         style={{
           resizeMode: 'contain',
@@ -16,8 +16,8 @@ const CourseCardSmall = ({ item }) => {
         }}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.courseName}>React Native</Text>
-        <Text>Teacher Name - Beginner</Text>
+        <Text style={styles.courseName}>{item.name}</Text>
+        <Text>{`${item.teacher.firstName} ${item.teacher.lastName}`} - {item.level}</Text>
       </View>
     </TouchableOpacity>
   );

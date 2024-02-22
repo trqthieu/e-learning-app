@@ -7,12 +7,12 @@ const CourseCardSmall = ({ item }) => {
     <TouchableOpacity
       style={styles.container}
       onPress={() =>
-        router.push({ pathname: "/course-unit-list", params: { unitId: 1 } })
+        router.push({ pathname: "/course-unit-list", params: { sectionId: item.id } })
       }
     >
       <Image
         source={{
-          uri: "https://www.freecodecamp.org/news/content/images/2023/04/reactnative.png",
+          uri: item?.course?.banner,
         }}
         style={{
           resizeMode: "contain",
@@ -22,8 +22,8 @@ const CourseCardSmall = ({ item }) => {
         }}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.courseName}>React Native Section</Text>
-        <Text>Teacher Name - Beginner</Text>
+        <Text style={styles.courseName}>{item?.title}</Text>
+        <Text>{item?.description} - {item?.courseUnits?.length} units</Text>
       </View>
     </TouchableOpacity>
   );

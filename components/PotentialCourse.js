@@ -9,7 +9,7 @@ import {
 import React from "react";
 import CourseCardSmall from "./CourseCardSmall";
 
-const PotentialCourse = () => {
+const PotentialCourse = ({data}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -19,7 +19,7 @@ const PotentialCourse = () => {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={[1, 2, 3, 4, 5]}
+        data={data}
         renderItem={({ item }) => <CourseCardSmall item={item} />}
         keyExtractor={(item) => item.id}
         key={(item) => item.id}
