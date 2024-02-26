@@ -33,6 +33,7 @@ export default function Page() {
       <Text style={styles.welcome}>Hello Tran Thieu</Text>
       <Text style={styles.title}>Find your course</Text>
       <Button onPress={() => router.push("/signup")} title="Login" />
+      <Button onPress={() => router.push("/exam")} title="Exam" />
       <SearchBar />
       {data.length ? <PopularCourse data={data} /> : null}
       {data.length ? <PotentialCourse data={data} /> : null}

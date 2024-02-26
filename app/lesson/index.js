@@ -1,16 +1,10 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FontAwesome } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import Tabs from "../../components/Tabs";
-const tabs = ["Content"];
-import { MaterialIcons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { Image, ScrollView, Text, View } from "react-native";
 import instance from "../../axios-instance";
-import { convertTime } from "../../utils";
+import Tabs from "../../components/Tabs";
 import VideoPlayer from "../../components/VideoPlayer";
-import Video from "react-native-video";
+const tabs = ["Content"];
 const CourseDetail = () => {
   const local = useLocalSearchParams();
   const [data, setData] = useState();
@@ -81,17 +75,7 @@ const CourseDetail = () => {
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {displayTabContent()}
-        {data?.video ? (
-          <Video
-            source={{ uri: data?.video }} // Can be a URL or a local file.
-            // ref={(ref) => {
-            //   this.player = ref;
-            // }} // Store reference
-            // onBuffer={this.onBuffer} // Callback when remote video is buffering
-            // onError={this.videoError} // Callback when video cannot be loaded
-            // style={styles.backgroundVideo}
-          />
-        ) : null}
+        {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
       </ScrollView>
     </View>
   );
