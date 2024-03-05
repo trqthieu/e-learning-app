@@ -26,8 +26,9 @@ const CourseDetail = () => {
       case "Target":
         return (
           <View>
-            {data?.target?.map((item) => (
+            {data?.target?.map((item, index) => (
               <Text
+                key={index}
                 style={{
                   textAlign: "justify",
                   marginTop: 5,
@@ -41,8 +42,9 @@ const CourseDetail = () => {
       case "Description":
         return (
           <View>
-            {data?.description?.map((item) => (
+            {data?.description?.map((item, index) => (
               <Text
+                key={index}
                 style={{
                   textAlign: "justify",
                   marginTop: 5,
