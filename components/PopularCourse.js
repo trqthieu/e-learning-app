@@ -4,9 +4,10 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
-} from "react-native";
-import React from "react";
-import CourseCard from "./CourseCard";
+  ScrollView,
+} from 'react-native';
+import React from 'react';
+import CourseCard from './CourseCard';
 
 const PopularCourse = ({ data }) => {
   return (
@@ -17,30 +18,35 @@ const PopularCourse = ({ data }) => {
           <Text>Show all</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+      {/* <FlatList
         data={data}
         renderItem={({ item }) => <CourseCard item={item} />}
-        keyExtractor={(item) => item.id}
-        key={(item) => item.id}
+        keyExtractor={item => item.id}
+        key={item => item.id}
         contentContainerStyle={{ columnGap: 10 }}
         horizontal
         showsHorizontalScrollIndicator={false}
-      />
+      /> */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {data?.map(item => (
+          <CourseCard item={item} />
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginTop: 10,
     paddingVertical: 5,
   },
   title: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   search: {},
 });

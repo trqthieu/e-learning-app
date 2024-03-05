@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-} from "react-native";
-import React from "react";
-import CourseCardSmall from "./CourseCardSmall";
+} from 'react-native';
+import React from 'react';
+import CourseCardSmall from './CourseCardSmall';
 
-const PotentialCourse = ({data}) => {
+const PotentialCourse = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -18,14 +18,19 @@ const PotentialCourse = ({data}) => {
           <Text>Show all</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+      {/* <FlatList
         data={data}
         renderItem={({ item }) => <CourseCardSmall item={item} />}
-        keyExtractor={(item) => item.id}
-        key={(item) => item.id}
+        keyExtractor={item => item.id}
+        key={item => item.id}
         contentContainerStyle={{ rowGap: 10 }}
         showsVerticalScrollIndicator={false}
-      />
+      /> */}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {data?.map(item => (
+          <CourseCardSmall item={item} />
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -35,15 +40,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginTop: 10,
     paddingVertical: 5,
   },
   title: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   search: {},
 });

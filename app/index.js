@@ -6,19 +6,19 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import SearchBar from "../components/SearchBar";
-import PopularCourse from "../components/PopularCourse";
-import PotentialCourse from "../components/PotentialCourse";
-import { Stack, router } from "expo-router";
-import { useEffect, useState } from "react";
-import instance from "../axios-instance";
+} from 'react-native';
+import SearchBar from '../components/SearchBar';
+import PopularCourse from '../components/PopularCourse';
+import PotentialCourse from '../components/PotentialCourse';
+import { router } from 'expo-router';
+import { useEffect, useState } from 'react';
+import instance from '../axios-instance';
 
 function LogoTitle() {
   return (
     <Image
       style={{ width: 50, height: 50 }}
-      source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
+      source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
     />
   );
 }
@@ -26,9 +26,9 @@ function LogoTitle() {
 export default function Page() {
   const [data, setData] = useState([]);
   const fetchCourses = async () => {
-    const data = await instance.get("/courses", {
+    const data = await instance.get('/courses', {
       params: {
-        order: "ASC",
+        order: 'ASC',
         page: 1,
         take: 10,
       },
@@ -39,26 +39,26 @@ export default function Page() {
     fetchCourses();
   }, []);
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: 'My home',
-          headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerTitle: props => <LogoTitle {...props} />,
-        }}
-      />
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.welcome}>Hello Tran Thieu</Text>
       <Text style={styles.title}>Find your course</Text>
-      {/* <Button onPress={() => router.push("/signup")} title="Login" />
-      <Button onPress={() => router.push("/exam")} title="Exam" /> */}
+      {/* <Button onPress={() => router.push('/signup')} title='Login' /> */}
+      <Button onPress={() => router.push('/video')} title='Exam' />
       <SearchBar />
+      <Image
+        source={require('../assets/thumbnail.jpg')}
+        style={{
+          resizeMode: 'contain',
+          height: 250,
+          width: '100%',
+          borderRadius: 20,
+        }}
+      />
+      <Text style={styles.title}>Keep going</Text>
+      <Text style={styles.welcome}>Learn many necessary skills</Text>
       {data.length ? <PopularCourse data={data} /> : null}
       {data.length ? <PotentialCourse data={data} /> : null}
-    </View>
+    </ScrollView>
   );
 }
 
@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "800",
+    fontWeight: '800',
   },
 });

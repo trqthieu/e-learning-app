@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import React from "react";
-import { router } from "expo-router";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { router } from 'expo-router';
 
 const CourseCard = ({ item }) => {
   return (
@@ -10,14 +10,16 @@ const CourseCard = ({ item }) => {
           uri: item.banner,
         }}
         style={{
-          resizeMode: "contain",
+          resizeMode: 'contain',
           height: 150,
-          width: 250,
+          width: 220,
           borderRadius: 20,
         }}
       />
       <Text style={styles.courseName}>{item.name}</Text>
-      <Text>{`${item.teacher.firstName} ${item.teacher.lastName}`} - {item.level}</Text>
+      <Text>
+        {`${item.teacher.firstName} ${item.teacher.lastName}`} - {item.level}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -25,7 +27,7 @@ const CourseCard = ({ item }) => {
 const styles = StyleSheet.create({
   courseName: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   search: {},
 });

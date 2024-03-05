@@ -1,17 +1,17 @@
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Button, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import instance from "../../axios-instance";
-import Tabs from "../../components/Tabs";
-import { ResizeMode, Video } from "expo-av";
-import { MaterialIcons } from "@expo/vector-icons";
-const tabs = ["Content"];
+import { useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { Image, ScrollView, Text, View } from 'react-native';
+import instance from '../../axios-instance';
+import Tabs from '../../components/Tabs';
+import VideoPlayer from '../../components/VideoPlayer';
+import { ResizeMode, Video } from 'expo-av';
+const tabs = ['Content'];
 const CourseDetail = () => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const local = useLocalSearchParams();
   const [data, setData] = useState();
-  console.log("data", data);
+  console.log('data', data);
   const fetchCourse = async () => {
     const data = await instance.get(`/lessons/${local.id}`);
     setData(data?.data || null);
@@ -22,12 +22,12 @@ const CourseDetail = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const displayTabContent = () => {
     switch (activeTab) {
-      case "Content":
+      case 'Content':
         return (
           <View>
             <Text
               style={{
-                textAlign: "justify",
+                textAlign: 'justify',
                 marginTop: 5,
               }}
             >
@@ -51,9 +51,9 @@ const CourseDetail = () => {
           uri: data?.banner,
         }}
         style={{
-          resizeMode: "contain",
+          resizeMode: 'contain',
           height: 250,
-          width: "100%",
+          width: '100%',
           borderRadius: 20,
         }}
       />
@@ -78,13 +78,25 @@ const CourseDetail = () => {
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {displayTabContent()}
+        <Text>Hello this is my video</Text>
+        <Video
+          ref={video}
+          // style={styles.video}
+          source={{
+            uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+          }}
+          useNativeControls
+          resizeMode={ResizeMode.CONTAIN}
+          isLooping
+          onPlaybackStatusUpdate={status => setStatus(() => status)}
+        />
         {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
         {data?.video ? (
           <View>
             <Video
               ref={video}
               style={{
-                alignSelf: "center",
+                alignSelf: 'center',
                 width: 360,
                 height: 200,
               }}
@@ -94,40 +106,45 @@ const CourseDetail = () => {
               useNativeControls
               resizeMode={ResizeMode.CONTAIN}
               isLooping
-              onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+              onPlaybackStatusUpdate={status => setStatus(() => status)}
             />
           </View>
-        ) : <Text>Loading video</Text>}
+        ) : (
+          <Text>Loading video</Text>
+        )}
       </ScrollView>
       <View
         style={{
-          flexDirection: "row",
+          flexDirection: 'row',
           paddingVertical: 10,
-          alignItems: "center",
-          backgroundColor: "rgba(0, 0, 0, 0)",
-          position: "absolute",
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0)',
+          position: 'absolute',
           bottom: 0,
           paddingHorizontal: 20,
-          width: "100%",
+          width: '100%',
         }}
       >
         <TouchableOpacity
           activeOpacity={0.8}
           style={{
-            width: "100%",
-            backgroundColor: "orange",
+            width: '100%',
+            backgroundColor: 'orange',
             borderRadius: 20,
             marginLeft: 10,
             paddingVertical: 10,
           }}
           onPress={() =>
-            router.push({ pathname: "/course-unit-list", params: { sectionId: item.id } })
+            router.push({
+              pathname: '/course-unit-list',
+              params: { sectionId: item.id },
+            })
           }
         >
           <Text
             style={{
-              fontWeight: "800",
-              textAlign: "center",
+              fontWeight: '800',
+              textAlign: 'center',
             }}
           >
             Go to next lesson
