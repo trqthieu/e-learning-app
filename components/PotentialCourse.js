@@ -27,8 +27,8 @@ const PotentialCourse = ({ data }) => {
         showsVerticalScrollIndicator={false}
       /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        {data?.map(item => (
-          <CourseCardSmall item={item} />
+        {data?.map((item,index) => (
+          <CourseCardSmall item={item} key={index} />
         ))}
       </ScrollView>
     </View>

@@ -1,6 +1,6 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import instance from '../../axios-instance';
 import Tabs from '../../components/Tabs';
 import VideoPlayer from '../../components/VideoPlayer';
@@ -134,12 +134,12 @@ const CourseDetail = () => {
             marginLeft: 10,
             paddingVertical: 10,
           }}
-          onPress={() =>
-            router.push({
-              pathname: '/course-unit-list',
-              params: { sectionId: item.id },
-            })
-          }
+          // onPress={() =>
+          //   router.push({
+          //     pathname: '/course-unit-list',
+          //     params: { sectionId: item.id },
+          //   })
+          // }
         >
           <Text
             style={{

@@ -17,6 +17,18 @@ const CourseDetail = () => {
     const data = await instance.get(`/courses/${local.id}`);
     setData(data?.data || null);
   };
+
+  const handleEnrollCourse = async () => {
+    const result = await instance.post(`/user-course`, {
+      userId: 1,
+      courseId: data?.id,
+    });
+    console.log("result", result.data);
+    router.push({
+      pathname: `/course-section`,
+      params: { courseId: data?.id },
+    });
+  };
   useEffect(() => {
     fetchCourse();
   }, []);
@@ -200,12 +212,7 @@ const CourseDetail = () => {
             marginLeft: 10,
             paddingVertical: 10,
           }}
-          onPress={() =>
-            router.push({
-              pathname: `/course-section`,
-              params: { courseId: data?.id },
-            })
-          }
+          onPress={() => handleEnrollCourse()}
         >
           <Text
             style={{

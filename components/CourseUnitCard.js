@@ -1,14 +1,24 @@
 import { router } from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import instance from "../axios-instance";
 
 const CourseCardSmall = ({ item }) => {
+  const handleEnrollUnit = async () => {
+    const result = await instance.post("user-course-unit", {
+      userId: 1,
+      courseUnitId: item.id,
+    });
+    console.log('result unit', result.data);
+    router.push({
+      pathname: "/course-unit-detail",
+      params: { unitId: item?.id },
+    });
+  };
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() =>
-        router.push({ pathname: "/course-unit-detail", params: { unitId: item?.id } })
-      }
+      onPress={() => handleEnrollUnit()}
     >
       <Image
         source={{
@@ -23,7 +33,9 @@ const CourseCardSmall = ({ item }) => {
       />
       <View style={styles.textContainer}>
         <Text style={styles.courseName}>{item?.title}</Text>
-        <Text>{item?.description} - {item?.lessons?.length} lessons</Text>
+        <Text>
+          {item?.description} - {item?.lessons?.length} lessons
+        </Text>
       </View>
     </TouchableOpacity>
   );

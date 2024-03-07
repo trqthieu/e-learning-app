@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-} from 'react-native';
-import React from 'react';
-import CourseCard from './CourseCard';
+} from "react-native";
+import React from "react";
+import CourseCard from "./CourseCard";
 
 const PopularCourse = ({ data }) => {
   return (
@@ -28,8 +28,8 @@ const PopularCourse = ({ data }) => {
         showsHorizontalScrollIndicator={false}
       /> */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {data?.map(item => (
-          <CourseCard item={item} />
+        {data?.map((item, index) => (
+          <CourseCard item={item} key={index} />
         ))}
       </ScrollView>
     </View>
@@ -38,15 +38,15 @@ const PopularCourse = ({ data }) => {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 10,
     paddingVertical: 5,
   },
   title: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   search: {},
 });
