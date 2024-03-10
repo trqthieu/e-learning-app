@@ -1,13 +1,35 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Import FontAwesome from Expo icons
+import instance from '../../axios-instance';
+import notifyMessage from '../../components/NotifyMessage';
+import { storeToken, storeUser } from '../../storage';
+import { router } from 'expo-router';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    try {
+      const result = await instance.post('/auth/login', {
+        email: username,
+        password: password,
+      });
+      await storeToken(result.data.access_token);
+      await storeUser(result.data.user);
+      router.replace('/home');
+    } catch (error) {
+      notifyMessage(error?.response?.data?.message);
+    }
+
     // Implement your login logic here
   };
 
@@ -17,22 +39,29 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Username"
+          placeholder='Email'
           onChangeText={text => setUsername(text)}
           value={username}
-          placeholderTextColor="#bbb"
+          placeholderTextColor='#bbb'
         />
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.passwordInput}
-            placeholder="Password"
+            placeholder='Password'
             onChangeText={text => setPassword(text)}
             value={password}
             secureTextEntry={!showPassword}
-            placeholderTextColor="#bbb"
+            placeholderTextColor='#bbb'
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-            <FontAwesome name={showPassword ? 'eye' : 'eye-slash'} size={24} color="#bbb" />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeIcon}
+          >
+            <FontAwesome
+              name={showPassword ? 'eye' : 'eye-slash'}
+              size={24}
+              color='#bbb'
+            />
           </TouchableOpacity>
         </View>
         <TouchableOpacity>
@@ -49,7 +78,7 @@ const LoginScreen = () => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.googleButton}>
-        <FontAwesome name="google" size={20} color="#fff" />
+        <FontAwesome name='google' size={20} color='#fff' />
         <Text style={styles.googleButtonText}>Login with Google</Text>
       </TouchableOpacity>
     </View>

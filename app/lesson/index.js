@@ -39,6 +39,12 @@ const CourseDetail = () => {
         return null;
     }
   };
+  const handleLesson = () => {
+    router.push({
+      pathname: '/course-unit-detail',
+      params: { unitId: data.courseUnit.id },
+    });
+  };
   return (
     <View
       style={{
@@ -78,7 +84,6 @@ const CourseDetail = () => {
         <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {displayTabContent()}
-        <Text>Hello this is my video</Text>
         <Video
           ref={video}
           // style={styles.video}
@@ -134,12 +139,7 @@ const CourseDetail = () => {
             marginLeft: 10,
             paddingVertical: 10,
           }}
-          // onPress={() =>
-          //   router.push({
-          //     pathname: '/course-unit-list',
-          //     params: { sectionId: item.id },
-          //   })
-          // }
+          onPress={() => handleLesson()}
         >
           <Text
             style={{
@@ -147,7 +147,7 @@ const CourseDetail = () => {
               textAlign: 'center',
             }}
           >
-            Go to next lesson
+            Complete lesson
           </Text>
         </TouchableOpacity>
       </View>

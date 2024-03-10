@@ -1,7 +1,7 @@
 // tokenStorage.js
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const storeToken = async (token) => {
+export const storeToken = async token => {
   try {
     await AsyncStorage.setItem('accessToken', token);
   } catch (error) {
@@ -17,4 +17,26 @@ export const getToken = async () => {
     console.error('Error getting token:', error);
     return null;
   }
+};
+
+export const storeUser = async user => {
+  try {
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+  } catch (error) {
+    console.error('Error storing user:', error);
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const userJSON = await AsyncStorage.getItem('user');
+    const user = JSON.parse(userJSON);
+    return user;
+  } catch (error) {
+    console.error('Error storing user:', error);
+  }
+};
+
+export const clearStorage = async () => {
+  await AsyncStorage.clear();
 };

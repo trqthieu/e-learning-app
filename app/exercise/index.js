@@ -1,17 +1,37 @@
-import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import instance from "../../axios-instance";
-import Tabs from "../../components/Tabs";
-import VideoPlayer from "../../components/VideoPlayer";
-import { RadioButton } from "react-native-paper";
-const tabs = ["Content"];
+import { router, useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import instance from '../../axios-instance';
+import Tabs from '../../components/Tabs';
+import VideoPlayer from '../../components/VideoPlayer';
+import { RadioButton } from 'react-native-paper';
+const tabs = ['Content'];
 const CourseDetail = () => {
   const local = useLocalSearchParams();
   const [data, setData] = useState();
+  console.log(data);
   const [dataQuestion, setDataQuestion] = useState([]);
   const [selectedValue, setSelectedValue] = useState();
+  const [answered, setAnswered] = useState(false);
+  const [checkAnswer, setCheckAnswer] = useState(false);
   console.log(selectedValue);
+  const handleCheckAnswer = () => {
+    if (!checkAnswer) {
+      setCheckAnswer(true);
+      return;
+    }
+    router.back({
+      pathname: '/course-unit-detail',
+      params: { unitId: data.courseUnit.id, type: 'exercise' },
+    });
+  };
   const fetchCourse = async () => {
     const data = await instance.get(`/exercises/${local.id}`);
     setData(data?.data || null);
@@ -31,12 +51,12 @@ const CourseDetail = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const displayTabContent = () => {
     switch (activeTab) {
-      case "Content":
+      case 'Content':
         return (
           <View>
             <Text
               style={{
-                textAlign: "justify",
+                textAlign: 'justify',
                 marginTop: 5,
               }}
             >
@@ -60,9 +80,9 @@ const CourseDetail = () => {
           uri: data?.banner,
         }}
         style={{
-          resizeMode: "contain",
+          resizeMode: 'contain',
           height: 250,
-          width: "100%",
+          width: '100%',
           borderRadius: 20,
         }}
       />
@@ -90,48 +110,70 @@ const CourseDetail = () => {
         {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
         <Text
           style={{
-            fontWeight: "600",
+            fontWeight: '600',
             marginTop: 10,
             fontSize: 16,
           }}
         >
           Questions
         </Text>
-        {dataQuestion?.map((question) => {
+        {dataQuestion?.map((question, index) => {
           return (
-            <View>
+            <View key={index}>
               <Text
                 style={{
-                  fontWeight: "600",
+                  fontWeight: '600',
                 }}
               >
                 {question.title}
               </Text>
               <View>
-                {question?.questionSelects?.map((selection) => {
+                {question?.questionSelects?.map((selection, index) => {
                   return (
                     <View
+                      key={index}
                       style={{
-                        flexDirection: "row",
-                        alignItems: "center",
+                        flexDirection: 'row',
+                        alignItems: 'center',
                       }}
                     >
                       <RadioButton.Android
+                        disabled={checkAnswer}
                         value={selection?.id}
                         status={
                           selectedValue?.[question?.id] === selection?.id
-                            ? "checked"
-                            : "unchecked"
+                            ? 'checked'
+                            : 'unchecked'
                         }
-                        onPress={() =>
+                        onPress={() => {
+                          const answerLength = Object.keys({
+                            ...selectedValue,
+                            [question?.id]: selection.id,
+                          }).length;
+                          if (answerLength === dataQuestion.length) {
+                            setAnswered(true);
+                          }
                           setSelectedValue({
                             ...selectedValue,
                             [question?.id]: selection.id,
-                          })
-                        }
-                        color="#007BFF"
+                          });
+                        }}
+                        color='#007BFF'
                       />
-                      <Text>{selection?.key}</Text>
+                      <Text
+                        style={
+                          checkAnswer && selection.isCorrect
+                            ? {
+                                color: 'green',
+                                fontWeight: '800',
+                              }
+                            : {
+                                color: '#000',
+                              }
+                        }
+                      >
+                        {selection?.key}
+                      </Text>
                     </View>
                   );
                 })}
@@ -140,6 +182,25 @@ const CourseDetail = () => {
           );
         })}
       </ScrollView>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={{
+          width: '100%',
+          backgroundColor: answered ? 'orange' : '#ccc',
+          borderRadius: 20,
+          paddingVertical: 10,
+        }}
+        onPress={() => handleCheckAnswer()}
+      >
+        <Text
+          style={{
+            fontWeight: '800',
+            textAlign: 'center',
+          }}
+        >
+          {checkAnswer ? 'Complete this exercise' : 'Check answers'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -147,20 +208,20 @@ const CourseDetail = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#F5F5F5',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   radioGroup: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     marginTop: 20,
     borderRadius: 8,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 16,
     elevation: 4,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -169,13 +230,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   radioButton: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   radioLabel: {
     marginLeft: 8,
     fontSize: 16,
-    color: "#333",
+    color: '#333',
   },
 });
 

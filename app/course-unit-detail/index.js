@@ -1,11 +1,11 @@
-import { useLocalSearchParams } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
-import CourseLesson from "../../components/CourseLesson";
-import CourseExercise from "../../components/CourseExercise";
-import Tabs from "../../components/Tabs";
-import { useEffect, useState } from "react";
-import instance from "../../axios-instance";
-const tabs = ["Lesson", "Exercise"];
+import { useLocalSearchParams } from 'expo-router';
+import { StyleSheet, Text, View } from 'react-native';
+import CourseLesson from '../../components/CourseLesson';
+import CourseExercise from '../../components/CourseExercise';
+import Tabs from '../../components/Tabs';
+import { useEffect, useState } from 'react';
+import instance from '../../axios-instance';
+const tabs = ['Lesson', 'Exercise'];
 
 export default function Page() {
   const item = useLocalSearchParams();
@@ -13,38 +13,41 @@ export default function Page() {
   const [data, setData] = useState([]);
   const [dataEx, setDataEx] = useState([]);
   const fetchCourses = async () => {
-    const data = await instance.get("/lessons", {
+    const data = await instance.get('/lessons', {
       params: { courseUnitId: item.unitId },
     });
     setData(data?.data?.data || []);
-    const dataEx = await instance.get("/exercises", {
+    const dataEx = await instance.get('/exercises', {
       params: { courseUnitId: item.unitId },
     });
     setDataEx(dataEx?.data?.data || []);
   };
   useEffect(() => {
+    if (item.type === 'exercise') {
+      setActiveTab(tabs[1]);
+    }
     fetchCourses();
   }, []);
   const displayTabContent = () => {
     switch (activeTab) {
-      case "Exercise":
+      case 'Exercise':
         return (
           <View
             style={{
               flex: 1,
             }}
           >
-            <CourseExercise data={dataEx}/>
+            <CourseExercise data={dataEx} />
           </View>
         );
-      case "Lesson":
+      case 'Lesson':
         return (
           <View
             style={{
               flex: 1,
             }}
           >
-            <CourseLesson data={data}/>
+            <CourseLesson data={data} />
           </View>
         );
       default:
@@ -70,7 +73,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "800",
+    fontWeight: '800',
     marginBottom: 10,
   },
 });
