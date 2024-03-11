@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Tabs from '../../components/Tabs';
 const tabs = ['Description', 'Target', 'Guideline'];
 import { MaterialIcons } from '@expo/vector-icons';
-import { router, useLocalSearchParams } from 'expo-router';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
 import instance from '../../axios-instance';
 import { convertTime } from '../../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -118,6 +118,11 @@ const CourseDetail = () => {
         flex: 1,
       }}
     >
+      <Stack.Screen
+        options={{
+          title: 'Course Detail',
+        }}
+      />
       <Image
         source={{
           uri: data?.banner,

@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import instance from '../../axios-instance';
@@ -52,6 +52,11 @@ const CourseDetail = () => {
         flex: 1,
       }}
     >
+      <Stack.Screen
+        options={{
+          title: 'Lesson',
+        }}
+      />
       <Image
         source={{
           uri: data?.banner,

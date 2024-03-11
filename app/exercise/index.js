@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
   Image,
@@ -75,6 +75,11 @@ const CourseDetail = () => {
         flex: 1,
       }}
     >
+      <Stack.Screen
+        options={{
+          title: 'Exercise',
+        }}
+      />
       <Image
         source={{
           uri: data?.banner,

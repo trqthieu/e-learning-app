@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import CourseLesson from '../../components/CourseLesson';
 import CourseExercise from '../../components/CourseExercise';
@@ -56,7 +56,12 @@ export default function Page() {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Course unit detail</Text>
+      <Stack.Screen
+        options={{
+          title: 'Course Unit Detail',
+        }}
+      />
+      {/* <Text style={styles.title}>Course unit detail</Text> */}
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       {displayTabContent()}
     </View>

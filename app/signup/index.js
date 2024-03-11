@@ -1,5 +1,12 @@
+import { Stack, router } from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 
 const SignUpScreen = () => {
   const [username, setUsername] = useState('');
@@ -12,35 +19,40 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: 'Signup',
+        }}
+      />
       <Text style={styles.title}>Sign Up</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder='Username'
         onChangeText={text => setUsername(text)}
         value={username}
-        placeholderTextColor="#bbb"
+        placeholderTextColor='#bbb'
       />
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder='Email'
         onChangeText={text => setEmail(text)}
         value={email}
-        placeholderTextColor="#bbb"
+        placeholderTextColor='#bbb'
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder='Password'
         onChangeText={text => setPassword(text)}
         value={password}
         secureTextEntry={true}
-        placeholderTextColor="#bbb"
+        placeholderTextColor='#bbb'
       />
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>Already have an account? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.replace('/login')}>
           <Text style={styles.loginLink}>Login</Text>
         </TouchableOpacity>
       </View>

@@ -17,7 +17,7 @@ import { useLocalSearchParams } from 'expo-router';
 
 const SearchPage = () => {
   const local = useLocalSearchParams();
-  const [searchText, setSearchText] = useState(local.searchData || 0);
+  const [searchText, setSearchText] = useState(local.searchData || '');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [data, setData] = useState([]);

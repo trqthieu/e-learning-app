@@ -1,9 +1,13 @@
+import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const CourseCardSmall = ({ item }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => router.push(`/course/${item.id}`)}
+    >
       <Image
         source={{
           uri: item.banner,
@@ -17,7 +21,9 @@ const CourseCardSmall = ({ item }) => {
       />
       <View style={styles.textContainer}>
         <Text style={styles.courseName}>{item.name}</Text>
-        <Text>{`${item.teacher.firstName} ${item.teacher.lastName}`} - {item.level}</Text>
+        <Text>
+          {`${item.teacher.firstName} ${item.teacher.lastName}`} - {item.level}
+        </Text>
       </View>
     </TouchableOpacity>
   );

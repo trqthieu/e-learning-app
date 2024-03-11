@@ -10,7 +10,7 @@ import { FontAwesome } from '@expo/vector-icons'; // Import FontAwesome from Exp
 import instance from '../../axios-instance';
 import notifyMessage from '../../components/NotifyMessage';
 import { storeToken, storeUser } from '../../storage';
-import { router } from 'expo-router';
+import { Stack, router } from 'expo-router';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -35,6 +35,11 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: 'Login',
+        }}
+      />
       <Text style={styles.title}>Login</Text>
       <View style={styles.inputContainer}>
         <TextInput
@@ -73,7 +78,7 @@ const LoginScreen = () => {
       </TouchableOpacity>
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>Don't have an account? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.replace('/signup')}>
           <Text style={styles.signupLink}>Sign Up</Text>
         </TouchableOpacity>
       </View>
