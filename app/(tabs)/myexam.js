@@ -14,6 +14,7 @@ import { getUser } from '../../storage';
 import PotentialCourse from '../../components/PotentialCourse';
 import SearchCourse from '../../components/SearchCourse';
 import { useLocalSearchParams } from 'expo-router';
+import ExamList from '../../components/ExamList';
 
 const MyCoursePage = () => {
   const local = useLocalSearchParams();
@@ -49,16 +50,14 @@ const MyCoursePage = () => {
 
   const fetchCourses = async () => {
     try {
-      const user = getUser();
-      const data = await instance.get('/user-course', {
+      const data = await instance.get('/exams', {
         params: {
           order: 'ASC',
           page: 1,
           take: 10,
-          userId: user.id,
         },
       });
-      setData(data?.data?.data.map(item => item.course) || []);
+      setData(data?.data?.data || []);
     } catch (error) {
       console.log('error', error);
     }
@@ -103,7 +102,7 @@ const MyCoursePage = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        {data.length ? <SearchCourse data={data} /> : null}
+        {data.length ? <ExamList data={data} /> : null}
       </ScrollView>
     </View>
   );
