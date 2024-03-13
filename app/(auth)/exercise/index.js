@@ -1,5 +1,5 @@
-import { Stack, router, useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import { Stack, router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -7,12 +7,12 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import instance from '../../axios-instance';
-import Tabs from '../../components/Tabs';
-import VideoPlayer from '../../components/VideoPlayer';
-import { RadioButton } from 'react-native-paper';
-const tabs = ['Content'];
+} from "react-native";
+import instance from "../../../axios-instance";
+import Tabs from "../../../components/Tabs";
+import VideoPlayer from "../../../components/VideoPlayer";
+import { RadioButton } from "react-native-paper";
+const tabs = ["Content"];
 const CourseDetail = () => {
   const local = useLocalSearchParams();
   const [data, setData] = useState();
@@ -28,8 +28,8 @@ const CourseDetail = () => {
       return;
     }
     router.back({
-      pathname: '/course-unit-detail',
-      params: { unitId: data.courseUnit.id, type: 'exercise' },
+      pathname: "/course-unit-detail",
+      params: { unitId: data.courseUnit.id, type: "exercise" },
     });
   };
   const fetchCourse = async () => {
@@ -51,12 +51,12 @@ const CourseDetail = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const displayTabContent = () => {
     switch (activeTab) {
-      case 'Content':
+      case "Content":
         return (
           <View>
             <Text
               style={{
-                textAlign: 'justify',
+                textAlign: "justify",
                 marginTop: 5,
               }}
             >
@@ -77,7 +77,7 @@ const CourseDetail = () => {
     >
       <Stack.Screen
         options={{
-          title: 'Exercise',
+          title: "Exercise",
         }}
       />
       <Image
@@ -85,9 +85,9 @@ const CourseDetail = () => {
           uri: data?.banner,
         }}
         style={{
-          resizeMode: 'contain',
+          resizeMode: "contain",
           height: 250,
-          width: '100%',
+          width: "100%",
           borderRadius: 20,
         }}
       />
@@ -115,7 +115,7 @@ const CourseDetail = () => {
         {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
         <Text
           style={{
-            fontWeight: '600',
+            fontWeight: "600",
             marginTop: 10,
             fontSize: 16,
           }}
@@ -127,7 +127,7 @@ const CourseDetail = () => {
             <View key={index}>
               <Text
                 style={{
-                  fontWeight: '600',
+                  fontWeight: "600",
                 }}
               >
                 {question.title}
@@ -138,8 +138,8 @@ const CourseDetail = () => {
                     <View
                       key={index}
                       style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
+                        flexDirection: "row",
+                        alignItems: "center",
                       }}
                     >
                       <RadioButton.Android
@@ -147,8 +147,8 @@ const CourseDetail = () => {
                         value={selection?.id}
                         status={
                           selectedValue?.[question?.id] === selection?.id
-                            ? 'checked'
-                            : 'unchecked'
+                            ? "checked"
+                            : "unchecked"
                         }
                         onPress={() => {
                           const answerLength = Object.keys({
@@ -163,17 +163,17 @@ const CourseDetail = () => {
                             [question?.id]: selection.id,
                           });
                         }}
-                        color='#007BFF'
+                        color="#007BFF"
                       />
                       <Text
                         style={
                           checkAnswer && selection.isCorrect
                             ? {
-                                color: 'green',
-                                fontWeight: '800',
+                                color: "green",
+                                fontWeight: "800",
                               }
                             : {
-                                color: '#000',
+                                color: "#000",
                               }
                         }
                       >
@@ -190,8 +190,8 @@ const CourseDetail = () => {
       <TouchableOpacity
         activeOpacity={0.8}
         style={{
-          width: '100%',
-          backgroundColor: answered ? 'orange' : '#ccc',
+          width: "100%",
+          backgroundColor: answered ? "orange" : "#ccc",
           borderRadius: 20,
           paddingVertical: 10,
         }}
@@ -199,11 +199,11 @@ const CourseDetail = () => {
       >
         <Text
           style={{
-            fontWeight: '800',
-            textAlign: 'center',
+            fontWeight: "800",
+            textAlign: "center",
           }}
         >
-          {checkAnswer ? 'Complete this exercise' : 'Check answers'}
+          {checkAnswer ? "Complete this exercise" : "Check answers"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -213,20 +213,20 @@ const CourseDetail = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#F5F5F5",
+    justifyContent: "center",
+    alignItems: "center",
   },
   radioGroup: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
     marginTop: 20,
     borderRadius: 8,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 16,
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -235,13 +235,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   radioButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   radioLabel: {
     marginLeft: 8,
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
 });
 

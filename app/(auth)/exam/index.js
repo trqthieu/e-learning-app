@@ -1,15 +1,15 @@
-import { Stack, router, useLocalSearchParams } from 'expo-router';
+import { Stack, router, useLocalSearchParams } from "expo-router";
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import Exam from '../../components/Exam';
-import { useEffect, useState } from 'react';
-import instance from '../../axios-instance';
-import { RadioButton } from 'react-native-paper';
+} from "react-native";
+import Exam from "../../../components/Exam";
+import { useEffect, useState } from "react";
+import instance from "../../../axios-instance";
+import { RadioButton } from "react-native-paper";
 
 export default function Page() {
   const item = useLocalSearchParams();
@@ -23,11 +23,11 @@ export default function Page() {
       return;
     }
     router.back({
-      pathname: '/home',
+      pathname: "/home",
     });
   };
   const fetchCourses = async () => {
-    const data = await instance.get('/questions', {
+    const data = await instance.get("/questions", {
       params: {
         page: 1,
         take: 50,
@@ -43,7 +43,7 @@ export default function Page() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Exam Detail',
+          title: "Exam Detail",
         }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -52,7 +52,7 @@ export default function Page() {
             <View key={index}>
               <Text
                 style={{
-                  fontWeight: '600',
+                  fontWeight: "600",
                 }}
               >
                 {question.title}
@@ -63,8 +63,8 @@ export default function Page() {
                     <View
                       key={index}
                       style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
+                        flexDirection: "row",
+                        alignItems: "center",
                       }}
                     >
                       <RadioButton.Android
@@ -72,8 +72,8 @@ export default function Page() {
                         value={selection?.id}
                         status={
                           selectedValue?.[question?.id] === selection?.id
-                            ? 'checked'
-                            : 'unchecked'
+                            ? "checked"
+                            : "unchecked"
                         }
                         onPress={() => {
                           const answerLength = Object.keys({
@@ -88,17 +88,17 @@ export default function Page() {
                             [question?.id]: selection.id,
                           });
                         }}
-                        color='#007BFF'
+                        color="#007BFF"
                       />
                       <Text
                         style={
                           checkAnswer && selection.isCorrect
                             ? {
-                                color: 'green',
-                                fontWeight: '800',
+                                color: "green",
+                                fontWeight: "800",
                               }
                             : {
-                                color: '#000',
+                                color: "#000",
                               }
                         }
                       >
@@ -115,8 +115,8 @@ export default function Page() {
       <TouchableOpacity
         activeOpacity={0.8}
         style={{
-          width: '100%',
-          backgroundColor: answered ? 'orange' : '#ccc',
+          width: "100%",
+          backgroundColor: answered ? "orange" : "#ccc",
           borderRadius: 20,
           paddingVertical: 10,
         }}
@@ -124,11 +124,11 @@ export default function Page() {
       >
         <Text
           style={{
-            fontWeight: '800',
-            textAlign: 'center',
+            fontWeight: "800",
+            textAlign: "center",
           }}
         >
-          {checkAnswer ? 'Complete this exercise' : 'Check answers'}
+          {checkAnswer ? "Complete this exercise" : "Check answers"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '800',
+    fontWeight: "800",
     marginBottom: 10,
   },
 });

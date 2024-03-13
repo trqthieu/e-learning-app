@@ -1,10 +1,9 @@
-import { ToastAndroid, Platform, AlertIOS } from 'react-native';
-
+import { ToastAndroid, Platform, Alert } from "react-native";
 function notifyMessage(msg) {
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     ToastAndroid.show(msg, ToastAndroid.SHORT);
   } else {
-    AlertIOS.alert(msg);
+    Alert.alert(msg);
   }
 }
 export default notifyMessage;

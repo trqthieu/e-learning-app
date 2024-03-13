@@ -5,21 +5,21 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import SearchBar from '../../components/SearchBar';
-import PopularCourse from '../../components/PopularCourse';
-import PotentialCourse from '../../components/PotentialCourse';
-import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
-import instance from '../../axios-instance';
-import { clearStorage, getUser } from '../../storage';
-import { SafeAreaView } from 'react-native-safe-area-context';
+} from "react-native";
+import SearchBar from "../../components/SearchBar";
+import PopularCourse from "../../components/PopularCourse";
+import PotentialCourse from "../../components/PotentialCourse";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import instance from "../../axios-instance";
+import { clearStorage, getUser } from "../../storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function LogoTitle() {
   return (
     <Image
       style={{ width: 50, height: 50 }}
-      source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+      source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
     />
   );
 }
@@ -31,16 +31,16 @@ export default function Page() {
     try {
       const user = await getUser();
       setCurrentUser(user);
-      const data = await instance.get('/courses', {
+      const data = await instance.get("/courses", {
         params: {
-          order: 'ASC',
+          order: "ASC",
           page: 1,
           take: 10,
         },
       });
       setData(data?.data?.data || []);
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
   useEffect(() => {
@@ -53,15 +53,13 @@ export default function Page() {
           Hello {`${currentUser?.firstName} ${currentUser?.lastName}`}
         </Text>
         <Text style={styles.title}>Find your course</Text>
-        <Button onPress={() => router.push('/login')} title='Login' />
-        {/* <Button onPress={() => router.push('/video')} title='Exam' /> */}
-        <SearchBar />
+        {/* <SearchBar /> */}
         <Image
-          source={require('../../assets/thumbnail.jpg')}
+          source={require("../../assets/thumbnail.jpg")}
           style={{
-            resizeMode: 'contain',
+            resizeMode: "contain",
             height: 250,
-            width: '100%',
+            width: "100%",
             borderRadius: 20,
           }}
         />
@@ -84,6 +82,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 });

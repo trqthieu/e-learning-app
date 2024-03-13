@@ -8,14 +8,13 @@ import {
   Text,
   View,
 } from "react-native";
-import instance from "../../axios-instance";
-import Tabs from "../../components/Tabs";
-import VideoPlayer from "../../components/VideoPlayer";
+import instance from "../../../axios-instance";
+import Tabs from "../../../components/Tabs";
+import VideoPlayer from "../../../components/VideoPlayer";
 import { RadioButton } from "react-native-paper";
 import { Audio } from "expo-av";
 const tabs = ["Content"];
 const CourseDetail = () => {
-  
   const local = useLocalSearchParams();
   const [data, setData] = useState();
   const [dataQuestion, setDataQuestion] = useState([]);
