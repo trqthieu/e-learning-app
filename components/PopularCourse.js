@@ -10,6 +10,7 @@ import React from "react";
 import CourseCard from "./CourseCard";
 
 const PopularCourse = ({ data }) => {
+  console.log("check data", data);
   return (
     <View>
       <View style={styles.header}>

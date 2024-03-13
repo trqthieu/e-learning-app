@@ -1,16 +1,16 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import Tabs from '../../components/Tabs';
-const tabs = ['Description', 'Target', 'Guideline'];
-import { MaterialIcons } from '@expo/vector-icons';
-import { Stack, router, useLocalSearchParams } from 'expo-router';
-import instance from '../../axios-instance';
-import { convertTime } from '../../utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUser } from '../../storage';
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import Tabs from "../../../components/Tabs";
+const tabs = ["Description", "Target", "Guideline"];
+import { MaterialIcons } from "@expo/vector-icons";
+import { Stack, router, useLocalSearchParams } from "expo-router";
+import instance from "../../../axios-instance";
+import { convertTime } from "../../../utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUser } from "../../../storage";
 
 const CourseDetail = () => {
   const local = useLocalSearchParams();
@@ -18,7 +18,7 @@ const CourseDetail = () => {
   const [isRegistered, setIsRegistered] = useState();
   const fetchCourse = async () => {
     const user = await getUser();
-    const registerResult = await instance.get('/user-course', {
+    const registerResult = await instance.get("/user-course", {
       params: {
         userId: user.id,
         courseId: local.id,
@@ -35,7 +35,7 @@ const CourseDetail = () => {
 
   const handleEnrollCourse = async () => {
     const user = await getUser();
-    const registerResult = await instance.get('/user-course', {
+    const registerResult = await instance.get("/user-course", {
       params: {
         userId: user.id,
         courseId: local.id,
@@ -52,7 +52,7 @@ const CourseDetail = () => {
       userId: user.id,
       courseId: data?.id,
     });
-    console.log('result', result.data);
+    console.log("result", result.data);
     router.push({
       pathname: `/course-section`,
       params: { courseId: data?.id },
@@ -64,14 +64,14 @@ const CourseDetail = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const displayTabContent = () => {
     switch (activeTab) {
-      case 'Target':
+      case "Target":
         return (
           <View>
             {data?.target?.map((item, index) => (
               <Text
                 key={index}
                 style={{
-                  textAlign: 'justify',
+                  textAlign: "justify",
                   marginTop: 5,
                 }}
               >
@@ -80,14 +80,14 @@ const CourseDetail = () => {
             ))}
           </View>
         );
-      case 'Description':
+      case "Description":
         return (
           <View>
             {data?.description?.map((item, index) => (
               <Text
                 key={index}
                 style={{
-                  textAlign: 'justify',
+                  textAlign: "justify",
                   marginTop: 5,
                 }}
               >
@@ -96,11 +96,11 @@ const CourseDetail = () => {
             ))}
           </View>
         );
-      case 'Guideline':
+      case "Guideline":
         return (
           <Text
             style={{
-              textAlign: 'justify',
+              textAlign: "justify",
               marginTop: 5,
             }}
           >
@@ -120,7 +120,7 @@ const CourseDetail = () => {
     >
       <Stack.Screen
         options={{
-          title: 'Course Detail',
+          title: "Course Detail",
         }}
       />
       <Image
@@ -128,9 +128,9 @@ const CourseDetail = () => {
           uri: data?.banner,
         }}
         style={{
-          resizeMode: 'contain',
+          resizeMode: "contain",
           height: 250,
-          width: '100%',
+          width: "100%",
           borderRadius: 20,
         }}
       />
@@ -148,29 +148,29 @@ const CourseDetail = () => {
             marginTop: 5,
           }}
         >
-          {`${data?.teacher?.firstName} ${data?.teacher?.lastName}`} -{' '}
+          {`${data?.teacher?.firstName} ${data?.teacher?.lastName}`} -{" "}
           {data?.level}
         </Text>
         <View
           style={{
-            flexDirection: 'row',
+            flexDirection: "row",
             marginTop: 10,
           }}
         >
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
           <View
             style={{
               marginLeft: 10,
-              flexDirection: 'row',
+              flexDirection: "row",
             }}
           >
             <Text
               style={{
-                fontWeight: '500',
+                fontWeight: "500",
                 fontSize: 16,
               }}
             >
@@ -181,17 +181,17 @@ const CourseDetail = () => {
         </View>
         <View
           style={{
-            flexDirection: 'row',
+            flexDirection: "row",
             marginTop: 10,
           }}
         >
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
-            <FontAwesome5 name='user-graduate' size={24} color='black' />
+            <FontAwesome5 name="user-graduate" size={24} color="black" />
             <Text
               style={{
                 marginLeft: 5,
@@ -202,12 +202,12 @@ const CourseDetail = () => {
           </View>
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
+              flexDirection: "row",
+              alignItems: "center",
               marginLeft: 10,
             }}
           >
-            <Ionicons name='time' size={24} color='black' />
+            <Ionicons name="time" size={24} color="black" />
             <Text
               style={{
                 marginLeft: 5,
@@ -223,26 +223,26 @@ const CourseDetail = () => {
       </ScrollView>
       <View
         style={{
-          flexDirection: 'row',
+          flexDirection: "row",
           paddingVertical: 10,
-          alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0)',
-          position: 'absolute',
+          alignItems: "center",
+          backgroundColor: "rgba(0, 0, 0, 0)",
+          position: "absolute",
           bottom: 0,
           paddingHorizontal: 20,
-          width: '100%',
+          width: "100%",
         }}
       >
         <TouchableOpacity activeOpacity={0.8}>
-          <MaterialIcons name='watch-later' size={24} color='black' />
+          <MaterialIcons name="watch-later" size={24} color="black" />
         </TouchableOpacity>
 
-        {typeof isRegistered === 'boolean' ? (
+        {typeof isRegistered === "boolean" ? (
           <TouchableOpacity
             activeOpacity={0.8}
             style={{
-              width: '100%',
-              backgroundColor: 'orange',
+              width: "100%",
+              backgroundColor: "orange",
               borderRadius: 20,
               marginLeft: 10,
               paddingVertical: 10,
@@ -251,11 +251,11 @@ const CourseDetail = () => {
           >
             <Text
               style={{
-                fontWeight: '800',
-                textAlign: 'center',
+                fontWeight: "800",
+                textAlign: "center",
               }}
             >
-              {isRegistered ? 'Learn this course' : 'Enroll course'}
+              {isRegistered ? "Learn this course" : "Enroll course"}
             </Text>
           </TouchableOpacity>
         ) : null}
