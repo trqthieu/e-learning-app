@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import { SegmentedButtons } from "react-native-paper";
 
 function TabButton({ name, activeTab, onHandleSearchType }) {
   return (
@@ -25,7 +26,12 @@ function TabButton({ name, activeTab, onHandleSearchType }) {
 const Tabs = ({ tabs, activeTab, setActiveTab }) => {
   return (
     <View style={styles.container}>
-      <FlatList
+      <SegmentedButtons
+        value={activeTab}
+        onValueChange={setActiveTab}
+        buttons={tabs}
+      />
+      {/* <FlatList
         data={tabs}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -38,7 +44,7 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
         )}
         contentContainerStyle={{ columnGap: 10 }}
         keyExtractor={(item) => item}
-      />
+      /> */}
     </View>
   );
 };

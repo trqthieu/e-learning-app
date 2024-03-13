@@ -109,10 +109,17 @@ const CourseDetail = () => {
           {data?.level}
         </Text>
 
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        {displayTabContent()}
         {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
+        <View>
+          <Text
+            style={{
+              textAlign: "justify",
+              marginTop: 5,
+            }}
+          >
+            {data?.content}
+          </Text>
+        </View>
         <Text
           style={{
             fontWeight: "600",

@@ -4,7 +4,20 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Tabs from "../../../components/Tabs";
-const tabs = ["Description", "Target", "Guideline"];
+const tabs = [
+  {
+    value: "description",
+    label: "Description",
+  },
+  {
+    label: "Target",
+    value: "target",
+  },
+  {
+    label: "Guideline",
+    value: "guideline",
+  },
+];
 import { MaterialIcons } from "@expo/vector-icons";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import instance from "../../../axios-instance";
@@ -61,10 +74,10 @@ const CourseDetail = () => {
   useEffect(() => {
     fetchCourse();
   }, []);
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [activeTab, setActiveTab] = useState(tabs[0].value);
   const displayTabContent = () => {
     switch (activeTab) {
-      case "Target":
+      case "target":
         return (
           <View>
             {data?.target?.map((item, index) => (
@@ -80,7 +93,7 @@ const CourseDetail = () => {
             ))}
           </View>
         );
-      case "Description":
+      case "description":
         return (
           <View>
             {data?.description?.map((item, index) => (
@@ -96,7 +109,7 @@ const CourseDetail = () => {
             ))}
           </View>
         );
-      case "Guideline":
+      case "guideline":
         return (
           <Text
             style={{

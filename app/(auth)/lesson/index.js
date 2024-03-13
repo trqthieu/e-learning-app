@@ -5,7 +5,8 @@ import instance from "../../../axios-instance";
 import Tabs from "../../../components/Tabs";
 import VideoPlayer from "../../../components/VideoPlayer";
 import { ResizeMode, Video } from "expo-av";
-const tabs = ["Content"];
+import { StyleSheet } from "react-native";
+
 const CourseDetail = () => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
@@ -19,26 +20,6 @@ const CourseDetail = () => {
   useEffect(() => {
     fetchCourse();
   }, []);
-  const [activeTab, setActiveTab] = useState(tabs[0]);
-  const displayTabContent = () => {
-    switch (activeTab) {
-      case "Content":
-        return (
-          <View>
-            <Text
-              style={{
-                textAlign: "justify",
-                marginTop: 5,
-              }}
-            >
-              {data?.content}
-            </Text>
-          </View>
-        );
-      default:
-        return null;
-    }
-  };
   const handleLesson = () => {
     router.push({
       pathname: "/course-unit-detail",
@@ -82,16 +63,28 @@ const CourseDetail = () => {
             marginTop: 5,
           }}
         >
-          {data?.description} - {data?.courseUnit?.title}
+          {data?.description}
           {data?.level}
         </Text>
-
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        {displayTabContent()}
-        <Video
+        <View>
+          <Text
+            style={{
+              textAlign: "justify",
+              marginVertical: 20,
+            }}
+          >
+            {data?.content}
+            It is a long established fact that a reader will be distracted by
+            the readable content of a page when looking at its layout. The point
+            of using Lorem Ipsum is that it has a more-or-less normal
+            distribution of letters, as opposed to using 'Content here, content
+            here', making it look like readable English. Many desktop publishing
+            packages and web page editors now use Lorem Ipsum as their default
+          </Text>
+        </View>
+        {/* <Video
           ref={video}
-          // style={styles.video}
+          style={styles.video}
           source={{
             uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
           }}
@@ -99,17 +92,13 @@ const CourseDetail = () => {
           resizeMode={ResizeMode.CONTAIN}
           isLooping
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-        />
+        /> */}
         {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
         {data?.video ? (
           <View>
             <Video
               ref={video}
-              style={{
-                alignSelf: "center",
-                width: 360,
-                height: 200,
-              }}
+              style={styles.video}
               source={{
                 uri: data.video,
               }}
@@ -159,5 +148,13 @@ const CourseDetail = () => {
     </View>
   );
 };
+const styles = StyleSheet.create({
+  video: {
+    alignSelf: "center",
+    width: 360,
+    height: 200,
+    borderRadius: 10,
+  },
+});
 
 export default CourseDetail;
