@@ -5,11 +5,20 @@ import CourseExercise from "../../../components/CourseExercise";
 import Tabs from "../../../components/Tabs";
 import { useEffect, useState } from "react";
 import instance from "../../../axios-instance";
-const tabs = ["Lesson", "Exercise"];
+const tabs = [
+  {
+    label: "Lesson",
+    value: "lesson",
+  },
+  {
+    label: "Exercise",
+    value: "excercise",
+  },
+];
 
 export default function Page() {
   const item = useLocalSearchParams();
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [activeTab, setActiveTab] = useState(tabs[0].value);
   const [data, setData] = useState([]);
   const [dataEx, setDataEx] = useState([]);
   const fetchCourses = async () => {
@@ -24,13 +33,14 @@ export default function Page() {
   };
   useEffect(() => {
     if (item.type === "exercise") {
-      setActiveTab(tabs[1]);
+      setActiveTab(tabs[1].value);
     }
     fetchCourses();
   }, []);
   const displayTabContent = () => {
+    console.log(activeTab);
     switch (activeTab) {
-      case "Exercise":
+      case "excercise":
         return (
           <View
             style={{
@@ -40,7 +50,7 @@ export default function Page() {
             <CourseExercise data={dataEx} />
           </View>
         );
-      case "Lesson":
+      case "lesson":
         return (
           <View
             style={{
