@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   View,
   TextInput,
@@ -7,60 +7,61 @@ import {
   FlatList,
   StyleSheet,
   ScrollView,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import instance from "../../axios-instance";
-import { getUser } from "../../storage";
-import PotentialCourse from "../../components/PotentialCourse";
-import SearchCourse from "../../components/SearchCourse";
-import { useLocalSearchParams } from "expo-router";
-import CourseCard from "../../components/CourseCard";
+} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import instance from '../../axios-instance';
+import { getUser } from '../../storage';
+import PotentialCourse from '../../components/PotentialCourse';
+import SearchCourse from '../../components/SearchCourse';
+import { useLocalSearchParams } from 'expo-router';
+import CourseCard from '../../components/CourseCard';
+import MyCourseList from '../../components/MyCourseList';
 const MyCoursePage = () => {
   const local = useLocalSearchParams();
-  const [searchText, setSearchText] = useState(local.searchData || "");
+  const [searchText, setSearchText] = useState(local.searchData || '');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [data, setData] = useState([]);
-  console.log("data", data);
+  console.log('data', data);
 
   // Sample categories and levels in the new format
   const categories = {
-    ALL: "All",
-    ARCHIVE: "Archive",
-    FAVORITE: "Favorite",
+    ALL: 'All',
+    ARCHIVE: 'Archive',
+    FAVORITE: 'Favorite',
   };
   useEffect(() => {}, []);
 
   const handleSearch = () => {
     console.log(
-      "Searching for: ",
+      'Searching for: ',
       searchText,
-      " in category: ",
+      ' in category: ',
       selectedCategory,
-      " and level: ",
+      ' and level: ',
       selectedLevel
     );
     fetchCourses();
   };
 
-  const handleCategorySelect = (categoryKey) => {
+  const handleCategorySelect = categoryKey => {
     setSelectedCategory(selectedCategory === categoryKey ? null : categoryKey);
   };
 
   const fetchCourses = async () => {
     try {
       const user = getUser();
-      const data = await instance.get("/user-course", {
+      const data = await instance.get('/user-course', {
         params: {
-          order: "ASC",
+          order: 'ASC',
           page: 1,
           take: 10,
           userId: user.id,
         },
       });
-      setData(data?.data?.data.map((item) => item.course) || []);
+      setData(data?.data?.data || []);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
   useEffect(() => {
@@ -71,13 +72,13 @@ const MyCoursePage = () => {
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Search..."
-          placeholderTextColor="#777"
-          onChangeText={(text) => setSearchText(text)}
+          placeholder='Search...'
+          placeholderTextColor='#777'
+          onChangeText={text => setSearchText(text)}
           value={searchText}
         />
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-          <FontAwesome name="search" size={20} color="white" />
+          <FontAwesome name='search' size={20} color='white' />
         </TouchableOpacity>
       </View>
       <View style={styles.filterContainer}>
@@ -85,7 +86,7 @@ const MyCoursePage = () => {
           data={Object.entries(categories)}
           horizontal
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item[0]}
+          keyExtractor={item => item[0]}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[
@@ -105,7 +106,7 @@ const MyCoursePage = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        {data.length ? <SearchCourse data={data} /> : null}
+        {data.length ? <MyCourseList data={data} /> : null}
       </ScrollView>
     </View>
   );
@@ -114,13 +115,13 @@ const MyCoursePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 20,
   },
   searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#f0f0f0",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
     borderRadius: 25,
     paddingHorizontal: 15,
     marginBottom: 20,
@@ -128,14 +129,14 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 50,
-    color: "#333",
+    color: '#333',
     paddingHorizontal: 10,
   },
   icon: {
     marginRight: 10,
   },
   searchButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     borderRadius: 25,
     padding: 10,
   },
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   filterItem: {
@@ -153,13 +154,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
   },
   selectedFilter: {
-    backgroundColor: "orange",
+    backgroundColor: 'orange',
   },
   filterText: {
-    color: "#333",
+    color: '#333',
   },
 });
 
