@@ -3,17 +3,11 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 const CourseCardSmall = ({ item }) => {
+  console.log("check item", item);
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() =>
-        router.push({
-          pathname: "/exercise",
-          params: {
-            id: item.id,
-          },
-        })
-      }
+      onPress={() => router.push(`/exercise/${item.id}`)}
     >
       <Image
         source={{
