@@ -1,10 +1,33 @@
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import instance from '../axios-instance';
 import { getUser } from '../storage';
+import { FontAwesome } from '@expo/vector-icons';
 
-const CourseCardSmall = ({ item }) => {
+const CourseUnitCard = ({ item }) => {
+  const [isDone, setIsDone] = useState(false);
+  const getStatusUnit = async () => {
+    try {
+      const user = await getUser();
+      console.log({
+        userId: user.id,
+        unitIds: [item.id],
+      });
+      const result = await instance.post('/user-course-unit/status', {
+        userId: user.id,
+        unitIds: [item.id],
+      });
+      if (result.data[0]?.is_completed) {
+        setIsDone(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getStatusUnit();
+  }, []);
   const handleEnrollUnit = async () => {
     const user = await getUser();
     const result = await instance.post('user-course-unit', {
@@ -22,31 +45,26 @@ const CourseCardSmall = ({ item }) => {
       style={styles.container}
       onPress={() => handleEnrollUnit()}
     >
-      <Image
-        source={{
-          uri: 'https://www.freecodecamp.org/news/content/images/2023/04/reactnative.png',
-        }}
-        style={{
-          resizeMode: 'contain',
-          height: 80, // Adjust image height as needed
-          width: 120, // Adjust image width as needed
-          borderRadius: 20, // Adjust border radius as needed
-        }}
-      />
       <View style={styles.textContainer}>
         <Text style={styles.courseName}>{item?.title}</Text>
-        <Text>
-          {item?.description} - {item?.lessons?.length} lessons
-        </Text>
+        <Text>{item?.description}</Text>
       </View>
+      {isDone && (
+        <FontAwesome
+          name='check-circle'
+          size={24}
+          color='green'
+          style={styles.icon}
+        />
+      )}
     </TouchableOpacity>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between', // Align items with space between
     padding: 10,
     marginBottom: 10,
     backgroundColor: '#f0f0f0',
@@ -54,11 +72,15 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 10,
+    flex: 1, // Allow text container to take remaining space
   },
   courseName: {
     fontSize: 16,
     fontWeight: '600',
   },
+  icon: {
+    marginLeft: 10, // Add left margin to space out the icon
+  },
 });
 
-export default CourseCardSmall;
+export default CourseUnitCard;

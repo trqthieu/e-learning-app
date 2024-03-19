@@ -72,6 +72,9 @@ const SearchPage = () => {
           order: 'ASC',
           page: 1,
           take: 10,
+          name: searchText || undefined,
+          level: selectedLevel || undefined,
+          category: selectedCategory || undefined,
         },
       });
       console.log('data course', data);
