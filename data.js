@@ -8,7 +8,7 @@ const data = {
     {
       icon: 'shield-checkmark',
       name: 'Change Password',
-      screen: 'password',
+      screen: 'change-password',
     },
     {
       icon: 'exit',

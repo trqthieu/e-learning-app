@@ -50,7 +50,7 @@ const MyCoursePage = () => {
 
   const fetchCourses = async () => {
     try {
-      const user = getUser();
+      const user = await getUser();
       const data = await instance.get('/user-course', {
         params: {
           order: 'ASC',
@@ -59,6 +59,7 @@ const MyCoursePage = () => {
           userId: user.id,
         },
       });
+      console.log('data', data);
       setData(data?.data?.data || []);
     } catch (error) {
       console.log('error', error);
