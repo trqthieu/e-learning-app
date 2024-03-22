@@ -1,5 +1,5 @@
 import { Stack, router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -8,14 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Dimensions } from "react-native";
 import instance from "../../../axios-instance";
-import Tabs from "../../../components/Tabs";
 import VideoPlayer from "../../../components/VideoPlayer";
 import { Button } from "react-native-paper";
-import { Pressable } from "react-native";
-import { RadioButton } from "react-native-paper";
 import { sortAscending } from "../../../utils";
+import { getUser } from "../../../storage";
 const tabs = ["Content"];
 const options = [
   {
@@ -41,16 +38,17 @@ const CourseDetail = () => {
   const local = useLocalSearchParams();
   const [data, setData] = useState();
   const [answerList, setAnswerList] = useState([]);
-  const [trueAnswerList, setTrueAnswerList] = useState([]);
   const [selectedQues, setSelectedQues] = useState();
-  console.log(data);
   const [dataQuestion, setDataQuestion] = useState([]);
   const [selectedValue, setSelectedValue] = useState();
   const [answered, setAnswered] = useState(false);
   const [checkAnswer, setCheckAnswer] = useState(false);
-  console.log(selectedValue);
-  const handleCheckAnswer = () => {
-    setTrueAnswerList(dataQuestion);
+  const handleCheckAnswer = useCallback(() => {
+    if (answerList?.length === dataQuestion?.length && !checkAnswer) {
+      setCheckAnswer(true);
+      handleSubmit(answerList.filter((item) => item.isCorrect).length);
+    }
+    // setTrueAnswerList(dataQuestion);
     // if (!checkAnswer) {
     //   setCheckAnswer(true);
     //   return;
@@ -59,6 +57,19 @@ const CourseDetail = () => {
     //   pathname: "/course-unit-detail",
     //   params: { unitId: data.courseUnit.id, type: "exercise" },
     // });
+  }, [answerList?.length, dataQuestion?.length, checkAnswer]);
+
+  const handleSubmit = async (score) => {
+    try {
+      const user = await getUser();
+      await instance.post(`/user-exercise`, {
+        userId: user.id,
+        exerciseId: +local.id,
+        score,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const fetchCourse = async () => {
     const data = await instance.get(`/exercises/${local.id}`);
@@ -117,12 +128,15 @@ const CourseDetail = () => {
       setAnswerList((prev) => [...prev, { quesId, answerId, isCorrect }]);
     }
   };
-  console.log("check answer", answerList, dataQuestion);
+  // console.log("check answer", answerList, dataQuestion, selectedQues);
+  console.log("check data", data);
   return (
     <View
       style={{
-        padding: 10,
+        paddingHorizontal: 10,
         flex: 1,
+        paddingVertical: 10,
+        justifyContent: "space-between",
       }}
     >
       <Stack.Screen
@@ -130,10 +144,10 @@ const CourseDetail = () => {
           title: "Exercise",
         }}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <View>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 23,
             fontWeight: 500,
           }}
         >
@@ -148,28 +162,37 @@ const CourseDetail = () => {
         >
           {data?.title}
         </Text>
-        <Image
-          source={{
-            uri: data?.banner,
-          }}
+        <View
           style={{
-            resizeMode: "contain",
-            height: 200,
-            width: "100%",
-            borderRadius: 10,
+            height: 400,
             marginTop: 10,
           }}
-        />
-        {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
-        <View>
-          <Text
-            style={{
-              textAlign: "justify",
-              marginTop: 5,
-            }}
-          >
-            {data?.content}
-          </Text>
+        >
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Image
+              source={{
+                uri: data?.banner,
+              }}
+              style={{
+                resizeMode: "contain",
+                height: 200,
+                width: "100%",
+                borderRadius: 10,
+                marginTop: 10,
+              }}
+            />
+            {/* {data?.video ? <VideoPlayer uri={data.video} /> : null} */}
+            <View>
+              <Text
+                style={{
+                  textAlign: "justify",
+                  marginTop: 5,
+                }}
+              >
+                {data?.content}
+              </Text>
+            </View>
+          </ScrollView>
         </View>
         <View>
           <Text
@@ -192,13 +215,25 @@ const CourseDetail = () => {
                 key={index}
                 mode="contained"
                 buttonColor={
-                  answerList.find((x) => x.answerId === item.id)
+                  checkAnswer
+                    ? answerList.find((x) => x.answerId === item.id)
+                      ? answerList.find((x) => x.answerId === item.id).isCorrect
+                        ? "#32a84e"
+                        : "red"
+                      : "#745695"
+                    : answerList.find((x) => x.answerId === item.id)
                     ? "#CCAAD6"
                     : "#745695"
                 }
-                onPress={() =>
-                  handleSelectAnswer(selectedQues.id, item.id, item.isCorrect)
-                }
+                onPress={() => {
+                  if (!checkAnswer) {
+                    handleSelectAnswer(
+                      selectedQues.id,
+                      item.id,
+                      item.isCorrect
+                    );
+                  }
+                }}
               >
                 <Text>{`${
                   options.find((option) => option?.value === item?.order)?.label
@@ -233,16 +268,33 @@ const CourseDetail = () => {
             )}
           </View>
         )}
-      </ScrollView>
+        {checkAnswer && (
+          <View
+            style={{
+              marginBottom: 10,
+            }}
+          >
+            <Text>
+              Correct answer:{" "}
+              {
+                selectedQues?.questionSelects?.find((item) => item.isCorrect)
+                  .key
+              }
+            </Text>
+          </View>
+        )}
+      </View>
       <TouchableOpacity
         activeOpacity={0.8}
         style={{
           width: "100%",
-          backgroundColor: answered ? "orange" : "#ccc",
+          backgroundColor: !checkAnswer ? "orange" : "#ccc",
           borderRadius: 20,
           paddingVertical: 10,
+          marginBottom: 30,
         }}
-        onPress={() => handleCheckAnswer()}
+        disabled={checkAnswer}
+        onPress={handleCheckAnswer}
       >
         <Text
           style={{
@@ -250,7 +302,7 @@ const CourseDetail = () => {
             textAlign: "center",
           }}
         >
-          {checkAnswer ? "Complete this exercise" : "Check answers"}
+          {checkAnswer ? "Completed this exercise" : "Check answers"}
         </Text>
       </TouchableOpacity>
     </View>
