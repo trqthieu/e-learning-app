@@ -43,6 +43,9 @@ const MyCoursePage = () => {
     );
     fetchCourses();
   };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
   const handleCategorySelect = categoryKey => {
     setSelectedCategory(selectedCategory === categoryKey ? null : categoryKey);

@@ -16,7 +16,9 @@ const CourseCard = ({ item }) => {
           borderRadius: 20,
         }}
       />
-      <Text style={styles.courseName}>{item.name}</Text>
+      <Text style={styles.courseName} numberOfLines={3}>
+        {item.name}
+      </Text>
       <Text>
         {`${item.teacher.firstName} ${item.teacher.lastName}`} - {item.level}
       </Text>
@@ -28,6 +30,7 @@ const styles = StyleSheet.create({
   courseName: {
     fontSize: 16,
     fontWeight: '600',
+    width: 200,
   },
   search: {},
 });

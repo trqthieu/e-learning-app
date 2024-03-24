@@ -2,7 +2,7 @@ const data = {
   member: [
     {
       icon: 'person-circle',
-      name: 'Personal Information',
+      name: 'Personal Examination',
       screen: 'info',
     },
     {

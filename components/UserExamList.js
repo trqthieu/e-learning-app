@@ -8,16 +8,17 @@ import {
 } from 'react-native';
 import React from 'react';
 import CourseCardSmall from './CourseCardSmall';
+import UserExamItem from './UserExamItem';
 
-const PotentialCourse = ({ data }) => {
+const UserExamList = ({ data }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Potential Courses</Text>
+      {/* <View style={styles.header}>
+        <Text style={styles.title}>Popular Courses</Text>
         <TouchableOpacity>
           <Text>Show all</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* <FlatList
         data={data}
         renderItem={({ item }) => <CourseCardSmall item={item} />}
@@ -28,7 +29,7 @@ const PotentialCourse = ({ data }) => {
       /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         {data?.map((item, index) => (
-          <CourseCardSmall item={item} key={index} />
+          <UserExamItem item={item} key={index} />
         ))}
       </ScrollView>
     </View>
@@ -53,4 +54,4 @@ const styles = StyleSheet.create({
   search: {},
 });
 
-export default PotentialCourse;
+export default UserExamList;

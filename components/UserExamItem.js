@@ -1,20 +1,35 @@
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { convertTime } from '../utils/index';
+import instance from '../axios-instance';
 
-const ExamItem = ({ item }) => {
+const UserExamItem = ({ item }) => {
+  const [totalQuestion, setTotalQuestion] = useState(0);
+  console.log('user exam item', item);
+  const getQuestion = async () => {
+    const result = await instance.get('/questions', {
+      params: {
+        examId: item?.exam?.id,
+        take: 50,
+      },
+    });
+    setTotalQuestion(result.data?.meta?.totalItem);
+  };
+  useEffect(() => {
+    getQuestion();
+  }, []);
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() =>
-        router.push({
-          pathname: '/exam',
-          params: {
-            examId: item.id,
-          },
-        })
-      }
+      // onPress={() =>
+      //   router.push({
+      //     pathname: '/exam',
+      //     params: {
+      //       examId: item.id,
+      //     },
+      //   })
+      // }
     >
       {/* <Image
         source={{
@@ -28,9 +43,12 @@ const ExamItem = ({ item }) => {
         }}
       /> */}
       <View style={styles.textContainer}>
-        <Text style={styles.courseName}>{item.title}</Text>
+        <Text style={styles.courseName}>{item?.exam?.title}</Text>
         <Text>
-          {item.category} - {item?.time} minutes
+          {item?.exam?.category} - {item?.exam?.time} minutes
+        </Text>
+        <Text style={styles.courseName}>
+          {item?.score}/ {totalQuestion}
         </Text>
       </View>
     </TouchableOpacity>
@@ -55,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExamItem;
+export default UserExamItem;

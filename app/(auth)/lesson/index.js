@@ -1,18 +1,18 @@
-import { Stack, router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import instance from "../../../axios-instance";
-import Tabs from "../../../components/Tabs";
-import VideoPlayer from "../../../components/VideoPlayer";
-import { ResizeMode, Video } from "expo-av";
-import { StyleSheet } from "react-native";
+import { Stack, router, useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import instance from '../../../axios-instance';
+import Tabs from '../../../components/Tabs';
+import VideoPlayer from '../../../components/VideoPlayer';
+import { ResizeMode, Video } from 'expo-av';
+import { StyleSheet } from 'react-native';
 
 const CourseDetail = () => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const local = useLocalSearchParams();
   const [data, setData] = useState();
-  console.log("data", data);
+  console.log('data', data);
   const fetchCourse = async () => {
     const data = await instance.get(`/lessons/${local.id}`);
     setData(data?.data || null);
@@ -21,8 +21,8 @@ const CourseDetail = () => {
     fetchCourse();
   }, []);
   const handleLesson = () => {
-    router.push({
-      pathname: "/course-unit-detail",
+    router.back({
+      pathname: '/course-unit-detail',
       params: { unitId: data.courseUnit.id },
     });
   };
@@ -35,7 +35,7 @@ const CourseDetail = () => {
     >
       <Stack.Screen
         options={{
-          title: "Lesson",
+          title: 'Lesson',
         }}
       />
       <Image
@@ -43,9 +43,9 @@ const CourseDetail = () => {
           uri: data?.banner,
         }}
         style={{
-          resizeMode: "contain",
+          resizeMode: 'contain',
           height: 250,
-          width: "100%",
+          width: '100%',
           borderRadius: 20,
         }}
       />
@@ -69,7 +69,7 @@ const CourseDetail = () => {
         <View>
           <Text
             style={{
-              textAlign: "justify",
+              textAlign: 'justify',
               marginVertical: 20,
             }}
           >
@@ -105,7 +105,7 @@ const CourseDetail = () => {
               useNativeControls
               resizeMode={ResizeMode.CONTAIN}
               isLooping
-              onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+              onPlaybackStatusUpdate={status => setStatus(() => status)}
             />
           </View>
         ) : (
@@ -114,21 +114,21 @@ const CourseDetail = () => {
       </ScrollView>
       <View
         style={{
-          flexDirection: "row",
+          flexDirection: 'row',
           paddingVertical: 10,
-          alignItems: "center",
-          backgroundColor: "rgba(0, 0, 0, 0)",
-          position: "absolute",
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0)',
+          position: 'absolute',
           bottom: 0,
           paddingHorizontal: 20,
-          width: "100%",
+          width: '100%',
         }}
       >
         <TouchableOpacity
           activeOpacity={0.8}
           style={{
-            width: "100%",
-            backgroundColor: "orange",
+            width: '100%',
+            backgroundColor: 'orange',
             borderRadius: 20,
             marginLeft: 10,
             paddingVertical: 10,
@@ -137,8 +137,8 @@ const CourseDetail = () => {
         >
           <Text
             style={{
-              fontWeight: "800",
-              textAlign: "center",
+              fontWeight: '800',
+              textAlign: 'center',
             }}
           >
             Complete lesson
@@ -150,10 +150,11 @@ const CourseDetail = () => {
 };
 const styles = StyleSheet.create({
   video: {
-    alignSelf: "center",
+    alignSelf: 'center',
     width: 360,
     height: 200,
     borderRadius: 10,
+    marginBottom: 60,
   },
 });
 

@@ -26,6 +26,9 @@ function LogoTitle() {
 
 export default function Page() {
   const [data, setData] = useState([]);
+  const [dataPotential, setDataPotential] = useState([]);
+  console.log(dataPotential);
+  console.log(data);
   const [currentUser, setCurrentUser] = useState();
   const fetchCourses = async () => {
     try {
@@ -38,7 +41,15 @@ export default function Page() {
           take: 10,
         },
       });
+      const dataPotential = await instance.get('/courses', {
+        params: {
+          order: 'DESC',
+          page: 1,
+          take: 3,
+        },
+      });
       setData(data?.data?.data || []);
+      setDataPotential(dataPotential?.data?.data || []);
     } catch (error) {
       console.log('error', error);
     }
@@ -66,7 +77,7 @@ export default function Page() {
         <Text style={styles.title}>Keep going</Text>
         <Text style={styles.welcome}>Learn many necessary skills</Text>
         {data.length ? <PopularCourse data={data} /> : null}
-        {data.length ? <PotentialCourse data={data} /> : null}
+        {dataPotential.length ? <PotentialCourse data={dataPotential} /> : null}
       </ScrollView>
     </SafeAreaView>
   );
