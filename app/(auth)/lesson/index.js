@@ -6,6 +6,7 @@ import Tabs from '../../../components/Tabs';
 import VideoPlayer from '../../../components/VideoPlayer';
 import { ResizeMode, Video } from 'expo-av';
 import { StyleSheet } from 'react-native';
+import { getUser } from '../../../storage';
 
 const CourseDetail = () => {
   const video = React.useRef(null);
@@ -20,7 +21,12 @@ const CourseDetail = () => {
   useEffect(() => {
     fetchCourse();
   }, []);
-  const handleLesson = () => {
+  const handleLesson = async () => {
+    const user = await getUser();
+    const lessonData = await instance.post('/user-lesson', {
+      userId: user?.id,
+      lessonId: data?.id,
+    });
     router.back({
       pathname: '/course-unit-detail',
       params: { unitId: data.courseUnit.id },

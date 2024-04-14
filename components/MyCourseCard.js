@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { MD3Colors, ProgressBar } from 'react-native-paper';
+import { FontAwesome } from '@expo/vector-icons';
 
 const MyCourseCard = ({ item }) => {
   console.log(item);
@@ -25,7 +26,7 @@ const MyCourseCard = ({ item }) => {
         <Text style={styles.courseName}>{item.course?.name}</Text>
         <Text>
           {`${item.course?.teacher.firstName} ${item.course?.teacher.lastName}`}{' '}
-          - {item.course?.level}
+          - {item.course?.level} ({item.process}%)
         </Text>
         <ProgressBar
           progress={item.process / 100}

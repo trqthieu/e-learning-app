@@ -5,17 +5,22 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-} from "react-native";
-import React from "react";
-import CourseCard from "./CourseCard";
+} from 'react-native';
+import React from 'react';
+import CourseCard from './CourseCard';
+import { router } from 'expo-router';
 
 const PopularCourse = ({ data }) => {
-  console.log("check data", data);
+  console.log('check data', data);
   return (
     <View>
       <View style={styles.header}>
         <Text style={styles.title}>Popular Courses</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            router.push('/search');
+          }}
+        >
           <Text>Show all</Text>
         </TouchableOpacity>
       </View>
@@ -39,15 +44,15 @@ const PopularCourse = ({ data }) => {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginTop: 10,
     paddingVertical: 5,
   },
   title: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   search: {},
 });

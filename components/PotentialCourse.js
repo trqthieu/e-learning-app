@@ -14,7 +14,11 @@ const PotentialCourse = ({ data }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Potential Courses</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            router.push('/search');
+          }}
+        >
           <Text>Show all</Text>
         </TouchableOpacity>
       </View>
