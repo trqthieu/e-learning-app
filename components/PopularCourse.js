@@ -15,13 +15,13 @@ const PopularCourse = ({ data }) => {
   return (
     <View>
       <View style={styles.header}>
-        <Text style={styles.title}>Popular Courses</Text>
+        <Text style={styles.title}>Khóa học phổ biến</Text>
         <TouchableOpacity
           onPress={() => {
             router.push('/search');
           }}
         >
-          <Text>Show all</Text>
+          <Text>Xem tất cả</Text>
         </TouchableOpacity>
       </View>
       {/* <FlatList

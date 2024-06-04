@@ -8,11 +8,11 @@ import instance from '../../../axios-instance';
 import { getUser } from '../../../storage';
 const tabs = [
   {
-    label: 'Lesson',
+    label: 'Bài học',
     value: 'lesson',
   },
   {
-    label: 'Exercise',
+    label: 'Bài tập',
     value: 'exercise',
   },
 ];
@@ -98,7 +98,7 @@ export default function Page() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Course Unit Detail',
+          title: 'Chi tiết bài học',
         }}
       />
       {/* <Text style={styles.title}>Course unit detail</Text> */}
@@ -133,7 +133,7 @@ export default function Page() {
               textAlign: 'center',
             }}
           >
-            Complete unit
+            Hoàn thành bài học
           </Text>
         </TouchableOpacity>
       </View>

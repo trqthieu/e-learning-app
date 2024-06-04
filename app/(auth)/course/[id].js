@@ -7,14 +7,14 @@ import Tabs from '../../../components/Tabs';
 const tabs = [
   {
     value: 'description',
-    label: 'Description',
+    label: 'Mô tả',
   },
   {
-    label: 'Target',
+    label: 'Mục tiêu',
     value: 'target',
   },
   {
-    label: 'Guideline',
+    label: 'Hướng dẫn',
     value: 'guideline',
   },
 ];
@@ -138,7 +138,7 @@ const CourseDetail = () => {
     >
       <Stack.Screen
         options={{
-          title: 'Course Detail',
+          title: 'Chi tiết khóa học',
         }}
       />
       <Image
@@ -215,7 +215,7 @@ const CourseDetail = () => {
                 marginLeft: 5,
               }}
             >
-              496 students
+              496 học sinh
             </Text>
           </View>
           <View
@@ -273,7 +273,7 @@ const CourseDetail = () => {
                 textAlign: 'center',
               }}
             >
-              {isRegistered ? 'Learn this course' : 'Enroll course'}
+              {isRegistered ? 'Tiếp tục học' : 'Đăng ký học'}
             </Text>
           </TouchableOpacity>
         ) : null}

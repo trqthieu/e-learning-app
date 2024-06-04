@@ -1,19 +1,19 @@
-import { FontAwesome } from "@expo/vector-icons";
-import { Tabs, router } from "expo-router";
-import { getToken } from "../../storage";
+import { FontAwesome } from '@expo/vector-icons';
+import { Tabs, router } from 'expo-router';
+import { getToken } from '../../storage';
 
 export default function TabsLayout() {
-  console.log("run tablayout");
+  console.log('run tablayout');
   const checkLogin = async () => {
     const token = await getToken();
     if (!token) {
-      router.replace("/login");
+      router.replace('/login');
     }
   };
   checkLogin();
   return (
     <Tabs
-      initialRouteName="home"
+      initialRouteName='home'
       screenOptions={{
         headerShown: false,
       }}
@@ -32,60 +32,60 @@ export default function TabsLayout() {
       // }
     >
       <Tabs.Screen
-        name="home"
+        name='home'
         options={{
-          title: "Home",
-          href: "/home",
+          title: 'Trang chủ',
+          href: '/home',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <FontAwesome size={28} name='home' color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="search"
+        name='search'
         options={{
-          title: "Search",
+          title: 'Tìm kiếm',
           href: {
-            pathname: "/search",
+            pathname: '/search',
           },
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="search" color={color} />
+            <FontAwesome size={28} name='search' color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="mycourse"
+        name='mycourse'
         options={{
-          title: "Study",
+          title: 'Học tập',
           href: {
-            pathname: "/mycourse",
+            pathname: '/mycourse',
           },
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="book" color={color} />
+            <FontAwesome size={28} name='book' color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="myexam"
+        name='myexam'
         options={{
-          title: "Exam",
+          title: 'Bài thi',
           href: {
-            pathname: "/myexam",
+            pathname: '/myexam',
           },
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="calculator" color={color} />
+            <FontAwesome size={28} name='calculator' color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="account"
+        name='account'
         options={{
-          title: "Profile",
+          title: 'Cá nhân',
           href: {
-            pathname: "/account",
+            pathname: '/account',
           },
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="user" color={color} />
+            <FontAwesome size={28} name='user' color={color} />
           ),
         }}
       />

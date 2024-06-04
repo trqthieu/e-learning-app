@@ -23,7 +23,7 @@ export default function Page() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Course Section',
+          title: 'Học phần',
         }}
       />
       {/* <Text style={styles.title}>Course section list</Text> */}

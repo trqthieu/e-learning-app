@@ -90,7 +90,7 @@ const SearchPage = () => {
         {/* <FontAwesome name='search' size={20} color='#777' style={styles.icon} /> */}
         <TextInput
           style={styles.input}
-          placeholder='Search...'
+          placeholder='Tìm kiếm...'
           placeholderTextColor='#777'
           onChangeText={text => setSearchText(text)}
           value={searchText}
@@ -100,7 +100,7 @@ const SearchPage = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.filterContainer}>
-        <Text style={styles.title}>Categories:</Text>
+        <Text style={styles.title}>Thể loại:</Text>
         <FlatList
           data={Object.entries(categories)}
           horizontal
@@ -120,7 +120,7 @@ const SearchPage = () => {
         />
       </View>
       <View style={styles.filterContainer}>
-        <Text style={styles.title}>Levels:</Text>
+        <Text style={styles.title}>Mức độ:</Text>
         <FlatList
           data={Object.entries(levels)}
           horizontal

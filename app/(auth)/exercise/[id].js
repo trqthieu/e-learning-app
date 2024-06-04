@@ -148,7 +148,7 @@ const CourseDetail = () => {
     >
       <Stack.Screen
         options={{
-          title: 'Exercise',
+          title: 'Bài tập',
         }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -262,7 +262,7 @@ const CourseDetail = () => {
                   onPress={() => handleChangeQuestion(selectedQues.order - 1)}
                   style={{ width: '50%', position: 'absolute' }}
                 >
-                  Prev
+                  Trở lại
                 </Button>
               )}
               {selectedQues?.order !== dataQuestion.length - 1 && (
@@ -271,7 +271,7 @@ const CourseDetail = () => {
                   onPress={() => handleChangeQuestion(selectedQues.order + 1)}
                   style={{ width: '50%', position: 'absolute', right: 0 }}
                 >
-                  Next
+                  Tiếp tục
                 </Button>
               )}
             </View>
@@ -310,7 +310,7 @@ const CourseDetail = () => {
               textAlign: 'center',
             }}
           >
-            {checkAnswer ? 'Completed this exercise' : 'Check answers'}
+            {checkAnswer ? 'Completed this exercise' : 'Kiểm tra đáp án'}
           </Text>
         </TouchableOpacity>
       </ScrollView>

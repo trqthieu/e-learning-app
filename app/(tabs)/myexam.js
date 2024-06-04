@@ -26,9 +26,9 @@ const MyCoursePage = () => {
 
   // Sample categories and levels in the new format
   const categories = {
-    ALL: 'All',
-    ARCHIVE: 'Archive',
-    FAVORITE: 'Favorite',
+    ALL: 'Tất cả',
+    ARCHIVE: 'Lưu trữ',
+    FAVORITE: 'Yêu thích',
   };
   useEffect(() => {}, []);
 
@@ -71,7 +71,7 @@ const MyCoursePage = () => {
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}
-          placeholder='Search...'
+          placeholder='Tìm kiếm...'
           placeholderTextColor='#777'
           onChangeText={text => setSearchText(text)}
           value={searchText}

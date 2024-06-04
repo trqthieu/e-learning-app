@@ -60,13 +60,13 @@ const SignUpScreen = () => {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Signup',
+          title: 'Đăng ký',
         }}
       />
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Đăng ký</Text>
       <TextInput
         style={styles.input}
-        placeholder='First Name'
+        placeholder='Tên họ'
         onChangeText={text => {
           setFirstName(text);
           validateFields();
@@ -76,7 +76,7 @@ const SignUpScreen = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder='Last Name'
+        placeholder='Tên thật'
         onChangeText={text => {
           setLastName(text);
           validateFields();
@@ -97,7 +97,7 @@ const SignUpScreen = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder='Password (min 8 characters)'
+        placeholder='Mật khẩu (tối thiểu 8 ký tự)'
         onChangeText={text => {
           setPassword(text);
           validateFields();
@@ -108,7 +108,7 @@ const SignUpScreen = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder='Phone Number'
+        placeholder='Số điện thoai'
         onChangeText={text => {
           setPhoneNumber(text);
           validateFields();
@@ -128,13 +128,13 @@ const SignUpScreen = () => {
         {loading ? (
           <ActivityIndicator color='#fff' />
         ) : (
-          <Text style={styles.buttonText}>Sign Up</Text>
+          <Text style={styles.buttonText}>Đăng ký</Text>
         )}
       </TouchableOpacity>
       <View style={styles.loginContainer}>
-        <Text style={styles.loginText}>Already have an account? </Text>
+        <Text style={styles.loginText}>Bạn đã có tài khoản? </Text>
         <TouchableOpacity onPress={() => router.replace('/login')}>
-          <Text style={styles.loginLink}>Login</Text>
+          <Text style={styles.loginLink}>Đăng nhập</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -45,7 +45,7 @@ const UserExamItem = ({ item }) => {
       <View style={styles.textContainer}>
         <Text style={styles.courseName}>{item?.exam?.title}</Text>
         <Text>
-          {item?.exam?.category} - {item?.exam?.time} minutes
+          {item?.exam?.category} - {item?.exam?.time} phút
         </Text>
         <Text style={styles.courseName}>
           {item?.score}/ {totalQuestion}

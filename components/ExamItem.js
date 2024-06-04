@@ -30,7 +30,7 @@ const ExamItem = ({ item }) => {
       <View style={styles.textContainer}>
         <Text style={styles.courseName}>{item.title}</Text>
         <Text>
-          {item.category} - {item?.time} minutes
+          {item.category} - {item?.time} phút
         </Text>
       </View>
     </TouchableOpacity>

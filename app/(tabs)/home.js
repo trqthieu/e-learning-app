@@ -61,9 +61,9 @@ export default function Page() {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Text style={styles.welcome}>
-          Hello {`${currentUser?.firstName} ${currentUser?.lastName}`}
+          Xin chào {`${currentUser?.firstName} ${currentUser?.lastName}`}
         </Text>
-        <Text style={styles.title}>Find your course</Text>
+        <Text style={styles.title}>Khám phá các khóa học miễn phí</Text>
         {/* <SearchBar /> */}
         <Image
           source={require('../../assets/thumbnail.jpg')}
@@ -74,8 +74,8 @@ export default function Page() {
             borderRadius: 20,
           }}
         />
-        <Text style={styles.title}>Keep going</Text>
-        <Text style={styles.welcome}>Learn many necessary skills</Text>
+        <Text style={styles.title}>Tiếp tục tiến lên</Text>
+        <Text style={styles.welcome}>Đạt được những kỹ năng cần thiết</Text>
         {data.length ? <PopularCourse data={data} /> : null}
         {dataPotential.length ? <PotentialCourse data={dataPotential} /> : null}
       </ScrollView>

@@ -13,13 +13,13 @@ const PotentialCourse = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Potential Courses</Text>
+        <Text style={styles.title}>Khóa học tiềm năng</Text>
         <TouchableOpacity
           onPress={() => {
             router.push('/search');
           }}
         >
-          <Text>Show all</Text>
+          <Text>Xem tất cả</Text>
         </TouchableOpacity>
       </View>
       {/* <FlatList

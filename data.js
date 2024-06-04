@@ -2,17 +2,17 @@ const data = {
   member: [
     {
       icon: 'person-circle',
-      name: 'Personal Examination',
+      name: 'Bài thi',
       screen: 'info',
     },
     {
       icon: 'shield-checkmark',
-      name: 'Change Password',
+      name: 'Đổi mật khẩu',
       screen: 'change-password',
     },
     {
       icon: 'exit',
-      name: 'Logout',
+      name: 'Đăng xuất',
       screen: 'logout',
     },
     // {

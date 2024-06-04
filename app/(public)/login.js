@@ -37,10 +37,10 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Login',
+          title: 'Đăng nhập',
         }}
       />
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Đăng nhập</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -52,7 +52,7 @@ const LoginScreen = () => {
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.passwordInput}
-            placeholder='Password'
+            placeholder='Mật khẩu'
             onChangeText={text => setPassword(text)}
             value={password}
             secureTextEntry={!showPassword}
@@ -69,17 +69,17 @@ const LoginScreen = () => {
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
+        {/* <TouchableOpacity>
+          <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
+        </TouchableOpacity> */}
       </View>
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Đăng nhập</Text>
       </TouchableOpacity>
       <View style={styles.signupContainer}>
-        <Text style={styles.signupText}>Don't have an account? </Text>
+        <Text style={styles.signupText}>Bạn chưa có tài khoản? </Text>
         <TouchableOpacity onPress={() => router.replace('/signup')}>
-          <Text style={styles.signupLink}>Sign Up</Text>
+          <Text style={styles.signupLink}>Đăng ký</Text>
         </TouchableOpacity>
       </View>
       {/* <TouchableOpacity style={styles.googleButton}>

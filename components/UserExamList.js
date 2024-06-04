@@ -16,7 +16,7 @@ const UserExamList = ({ data }) => {
       {/* <View style={styles.header}>
         <Text style={styles.title}>Popular Courses</Text>
         <TouchableOpacity>
-          <Text>Show all</Text>
+          <Text></Text>
         </TouchableOpacity>
       </View> */}
       {/* <FlatList

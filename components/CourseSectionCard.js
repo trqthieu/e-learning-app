@@ -33,7 +33,7 @@ const CourseCardSmall = ({ item }) => {
         </View>
       </TouchableOpacity>
       {item?.courseUnits?.length ? (
-        <CollapsibleComponent title={`${item?.courseUnits?.length} units`}>
+        <CollapsibleComponent title={`${item?.courseUnits?.length} bài học`}>
           {item?.courseUnits?.map((unit, index) => {
             return <CourseUnitCard item={unit} key={index} />;
           })}

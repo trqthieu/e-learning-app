@@ -41,7 +41,7 @@ const CourseDetail = () => {
     >
       <Stack.Screen
         options={{
-          title: 'Lesson',
+          title: 'Bài học',
         }}
       />
       <Image
@@ -147,7 +147,7 @@ const CourseDetail = () => {
               textAlign: 'center',
             }}
           >
-            Complete lesson
+            Hoàn thành bài học
           </Text>
         </TouchableOpacity>
       </View>

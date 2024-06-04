@@ -267,7 +267,7 @@ export default function Page() {
             textAlign: 'center',
           }}
         >
-          {checkAnswer ? 'Completed this exam' : 'Submit answers'}
+          {checkAnswer ? 'Hoàn thành bài thi' : 'Nộp bài'}
         </Text>
       </TouchableOpacity>
     </View>
