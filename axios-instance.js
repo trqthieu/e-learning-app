@@ -3,8 +3,8 @@ import axios from 'axios';
 import { clearStorage, getToken, removeToken } from './storage'; // Assuming you have a function to remove token
 import { router, useNavigation } from 'expo-router';
 const instance = axios.create({
-  // baseURL: 'https://nest-e-learning.onrender.com',
-  baseURL: 'http://192.168.0.240:8086',
+  baseURL: 'https://nest-e-learning.onrender.com',
+  // baseURL: 'http://192.168.0.240:8086',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',

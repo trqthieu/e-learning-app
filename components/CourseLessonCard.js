@@ -5,7 +5,7 @@ import { getUser } from '../storage';
 import instance from '../axios-instance';
 import { FontAwesome } from '@expo/vector-icons';
 
-const CourseCardSmall = ({ item }) => {
+const CourseCardSmall = ({ item, setTotalCompleteLesson }) => {
   const [dataUserLesson, setDataUserLesson] = useState();
   console.log('dataUserLesson', dataUserLesson);
   const getUserLesson = async () => {
@@ -15,6 +15,9 @@ const CourseCardSmall = ({ item }) => {
       lessonId: item.id,
     });
     setDataUserLesson(data.data);
+    if (data.data.id) {
+      setTotalCompleteLesson((value) => value + 1);
+    }
   };
   useEffect(() => {
     getUserLesson();
@@ -68,9 +71,9 @@ const CourseCardSmall = ({ item }) => {
       </View>
       {dataUserLesson && (
         <FontAwesome
-          name='check-circle'
+          name="check-circle"
           size={24}
-          color='green'
+          color="green"
           style={styles.icon}
         />
       )}

@@ -22,6 +22,9 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState(tabs[0].value);
   const [data, setData] = useState([]);
   const [dataEx, setDataEx] = useState([]);
+  const [totalCompleteLesson, setTotalCompleteLesson] = useState(0);
+  const [totalCompleteEx, setTotalCompleteEx] = useState(0);
+  const [disableCompleteButton, setDisableCompleteButton] = useState(true);
   const fetchCourses = async () => {
     const data = await instance.get('/lessons', {
       params: { courseUnitId: item.unitId },
@@ -39,25 +42,27 @@ export default function Page() {
         userId: user.id,
       },
     });
+    console.log('result', result.data.data);
+    console.log('item.unitId', item.unitId);
     const userCourseUnit = result.data.data.find(
-      i => i?.courseUnit?.id === Number.parseInt(item.unitId)
+      (i) => i?.courseUnit?.id === Number.parseInt(item.unitId)
     );
-    const data = await instance.patch(
-      `/user-course-unit/${userCourseUnit.id}`,
-      {
-        userId: user.id,
-        courseUnitId: userCourseUnit.courseUnit.id,
-        is_completed: true,
-      }
-    );
-    console.log(
-      'data.data?.courseUnit?.courseSection?.course?.id',
-      data.data?.courseUnit?.courseSection?.course?.id
-    );
-    router.back({
-      pathname: `/course-section`,
-      params: { courseId: data.data?.courseUnit?.courseSection?.course?.id },
-    });
+    console.log('userCourseUnit', userCourseUnit);
+    if (userCourseUnit?.id) {
+      const data = await instance.patch(
+        `/user-course-unit/${userCourseUnit.id}`,
+        {
+          userId: user.id,
+          courseUnitId: userCourseUnit.courseUnit.id,
+          is_completed: true,
+        }
+      );
+      router.back({
+        pathname: `/course-section`,
+        params: { courseId: data.data?.courseUnit?.courseSection?.course?.id },
+      });
+    }
+
     return;
   };
   useEffect(() => {
@@ -67,8 +72,16 @@ export default function Page() {
     fetchCourses();
   }, []);
 
+  useEffect(() => {
+    if (
+      totalCompleteLesson >= data.length &&
+      totalCompleteEx >= dataEx.length
+    ) {
+      setDisableCompleteButton(false);
+    }
+  }, [totalCompleteLesson, totalCompleteEx]);
+
   const displayTabContent = () => {
-    console.log(activeTab);
     switch (activeTab) {
       case 'exercise':
         return (
@@ -77,7 +90,10 @@ export default function Page() {
               flex: 1,
             }}
           >
-            <CourseExercise data={dataEx} />
+            <CourseExercise
+              data={dataEx}
+              setTotalCompleteEx={setTotalCompleteEx}
+            />
           </View>
         );
       case 'lesson':
@@ -87,7 +103,10 @@ export default function Page() {
               flex: 1,
             }}
           >
-            <CourseLesson data={data} />
+            <CourseLesson
+              data={data}
+              setTotalCompleteLesson={setTotalCompleteLesson}
+            />
           </View>
         );
       default:
@@ -117,10 +136,11 @@ export default function Page() {
         }}
       >
         <TouchableOpacity
+          disabled={disableCompleteButton}
           activeOpacity={0.8}
           style={{
             width: '100%',
-            backgroundColor: 'orange',
+            backgroundColor: disableCompleteButton ? '#ccc' : 'orange',
             borderRadius: 20,
             marginLeft: 10,
             paddingVertical: 10,

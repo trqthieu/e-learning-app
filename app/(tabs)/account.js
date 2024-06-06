@@ -14,7 +14,7 @@ export default function MemberMenu() {
   };
   return (
     <View style={styles.container}>
-      {menuData.slice(0, 2).map((menu, index) => {
+      {menuData.slice(0, 4).map((menu, index) => {
         return (
           <TouchableOpacity
             style={styles.menuItem}

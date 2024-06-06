@@ -71,7 +71,7 @@ export default function Page() {
             resizeMode: 'contain',
             height: 250,
             width: '100%',
-            borderRadius: 20,
+            borderRadius: 40,
           }}
         />
         <Text style={styles.title}>Tiếp tục tiến lên</Text>

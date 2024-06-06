@@ -5,7 +5,7 @@ import { getUser } from '../storage';
 import instance from '../axios-instance';
 import { FontAwesome } from '@expo/vector-icons';
 
-const CourseCardSmall = ({ item }) => {
+const CourseCardSmall = ({ item, setTotalCompleteEx }) => {
   const [questionLength, setQuestionLength] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [isDone, setIsDone] = useState(false);
@@ -16,10 +16,10 @@ const CourseCardSmall = ({ item }) => {
       userId: user?.id,
       exerciseIds: [item.id],
     });
-    if (data?.data?.length)
-      if (data?.data?.length) {
-        setIsDone(true);
-      }
+    if (data?.data?.length) {
+      setIsDone(true);
+      setTotalCompleteEx((value) => value + 1);
+    }
     setCorrectAnswer(data?.data?.[0]?.score || 0);
     const question = await instance.get('/questions', {
       params: {
@@ -65,9 +65,9 @@ const CourseCardSmall = ({ item }) => {
             {correctAnswer}/{questionLength}
           </Text>
           <FontAwesome
-            name='check-circle'
+            name="check-circle"
             size={24}
-            color='green'
+            color="green"
             style={styles.icon}
           />
         </>

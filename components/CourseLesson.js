@@ -2,12 +2,12 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import CourseLessonCard from '../components/CourseLessonCard';
 
-const CourseLesson = ({ data }) => {
+const CourseLesson = ({ data, setTotalCompleteLesson }) => {
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <CourseLessonCard item={item} />}
+        renderItem={({ item }) => <CourseLessonCard item={item} setTotalCompleteLesson={setTotalCompleteLesson}/>}
         keyExtractor={item => item.id}
         key={item => item.id}
         contentContainerStyle={{ rowGap: 10 }}

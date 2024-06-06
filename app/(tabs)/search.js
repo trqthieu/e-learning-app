@@ -96,7 +96,7 @@ const SearchPage = () => {
           value={searchText}
         />
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-          <FontAwesome name='search' size={20} color='white' />
+          <FontAwesome name='search' size={20} color='#000' />
         </TouchableOpacity>
       </View>
       <View style={styles.filterContainer}>
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   searchButton: {
-    backgroundColor: '#007bff',
+    // backgroundColor: '#007bff',
     borderRadius: 25,
     padding: 10,
   },

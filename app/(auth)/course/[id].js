@@ -29,6 +29,7 @@ const CourseDetail = () => {
   const local = useLocalSearchParams();
   const [data, setData] = useState();
   const [isRegistered, setIsRegistered] = useState();
+  const [totalRegister, setTotalRegister] = useState(0);
   const fetchCourse = async () => {
     const user = await getUser();
     console.log({
@@ -76,8 +77,20 @@ const CourseDetail = () => {
       params: { courseId: data?.id },
     });
   };
+
+  const getTotalRegister = async () => {
+    const registerResult = await instance.get('/user-course', {
+      params: {
+        courseId: local.id,
+      },
+    });
+    const total = registerResult.data?.data?.length ?? 0;
+    setTotalRegister(total);
+  };
+
   useEffect(() => {
     fetchCourse();
+    getTotalRegister();
   }, []);
   const [activeTab, setActiveTab] = useState(tabs[0].value);
   const displayTabContent = () => {
@@ -169,17 +182,17 @@ const CourseDetail = () => {
           {`${data?.teacher?.firstName} ${data?.teacher?.lastName}`} -{' '}
           {data?.level}
         </Text>
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             marginTop: 10,
           }}
         >
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
-          <FontAwesome name='star' size={20} color='orange' />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
+          <FontAwesome name="star" size={20} color="orange" />
           <View
             style={{
               marginLeft: 10,
@@ -196,7 +209,7 @@ const CourseDetail = () => {
             </Text>
             <Text>(23)</Text>
           </View>
-        </View>
+        </View> */}
         <View
           style={{
             flexDirection: 'row',
@@ -209,13 +222,13 @@ const CourseDetail = () => {
               alignItems: 'center',
             }}
           >
-            <FontAwesome5 name='user-graduate' size={24} color='black' />
+            <FontAwesome5 name="user-graduate" size={24} color="black" />
             <Text
               style={{
                 marginLeft: 5,
               }}
             >
-              496 học sinh
+              {totalRegister} học sinh
             </Text>
           </View>
           <View
@@ -225,7 +238,7 @@ const CourseDetail = () => {
               marginLeft: 10,
             }}
           >
-            <Ionicons name='time' size={24} color='black' />
+            <Ionicons name="time" size={24} color="black" />
             <Text
               style={{
                 marginLeft: 5,
@@ -251,9 +264,9 @@ const CourseDetail = () => {
           width: '100%',
         }}
       >
-        <TouchableOpacity activeOpacity={0.8}>
-          <MaterialIcons name='watch-later' size={24} color='black' />
-        </TouchableOpacity>
+        {/* <TouchableOpacity activeOpacity={0.8}>
+          <MaterialIcons name="watch-later" size={24} color="black" />
+        </TouchableOpacity> */}
 
         {typeof isRegistered === 'boolean' ? (
           <TouchableOpacity

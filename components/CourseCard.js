@@ -13,7 +13,8 @@ const CourseCard = ({ item }) => {
           resizeMode: 'contain',
           height: 150,
           width: 220,
-          borderRadius: 20,
+          borderRadius: 30,
+          marginRight: 10
         }}
       />
       <Text style={styles.courseName} numberOfLines={3}>

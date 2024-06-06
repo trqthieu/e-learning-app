@@ -11,7 +11,7 @@ import { Stack, router } from 'expo-router';
 import instance from '../../../axios-instance';
 import { getUser } from '../../../storage';
 
-const ChangePasswordScreen = () => {
+const FlashcardScreen = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -47,27 +47,27 @@ const ChangePasswordScreen = () => {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Đổi mật khẩu',
+          title: 'Thẻ ôn luyện',
         }}
       />
-      <Text style={styles.title}>Đổi mật khẩu</Text>
+      <Text style={styles.title}>Thẻ ôn luyện</Text>
       <TextInput
         style={styles.input}
-        placeholder='Mật khẩu hiện tại'
+        placeholder='Current Password'
         secureTextEntry
         onChangeText={setCurrentPassword}
         value={currentPassword}
       />
       <TextInput
         style={styles.input}
-        placeholder='Mật khẩu mới'
+        placeholder='New Password'
         secureTextEntry
         onChangeText={setNewPassword}
         value={newPassword}
       />
       <TextInput
         style={styles.input}
-        placeholder='Xác nhận mật khẩu mới'
+        placeholder='Confirm New Password'
         secureTextEntry
         onChangeText={setConfirmNewPassword}
         value={confirmNewPassword}
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChangePasswordScreen;
+export default FlashcardScreen;

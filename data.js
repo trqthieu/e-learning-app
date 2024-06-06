@@ -11,6 +11,16 @@ const data = {
       screen: 'change-password',
     },
     {
+      icon: 'book',
+      name: 'Từ điển',
+      screen: 'dictionary',
+    },
+    {
+      icon: 'bookmark',
+      name: 'Thẻ ôn luyện',
+      screen: 'flashcard',
+    },
+    {
       icon: 'exit',
       name: 'Đăng xuất',
       screen: 'logout',

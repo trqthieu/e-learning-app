@@ -9,12 +9,12 @@ import {
   import React from "react";
   import CourseExerciseCard from "../components/CourseExerciseCard";
   
-  const CourseSection = ({data}) => {
+  const CourseSection = ({data, setTotalCompleteEx}) => {
     return (
       <View style={styles.container}>
         <FlatList
           data={data}
-          renderItem={({ item }) => <CourseExerciseCard item={item} />}
+          renderItem={({ item }) => <CourseExerciseCard item={item} setTotalCompleteEx={setTotalCompleteEx}/>}
           keyExtractor={(item) => item.id}
           key={(item) => item.id}
           contentContainerStyle={{ rowGap: 10 }}

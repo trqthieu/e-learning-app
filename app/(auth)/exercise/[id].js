@@ -310,7 +310,7 @@ const CourseDetail = () => {
               textAlign: 'center',
             }}
           >
-            {checkAnswer ? 'Completed this exercise' : 'Kiểm tra đáp án'}
+            {checkAnswer ? 'Hoàn thành bài tập' : 'Kiểm tra đáp án'}
           </Text>
         </TouchableOpacity>
       </ScrollView>
