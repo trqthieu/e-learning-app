@@ -62,7 +62,7 @@ const FlashcardScreen = () => {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Danh sách thẻ ôn luyện',
+          title: 'Chi tiết thẻ ôn luyện',
         }}
       />
       {/* <Text style={styles.title}>Danh sách thẻ ôn luyện</Text> */}

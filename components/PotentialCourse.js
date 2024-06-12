@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import CourseCardSmall from './CourseCardSmall';
+import { router } from 'expo-router';
 
 const PotentialCourse = ({ data }) => {
   return (
