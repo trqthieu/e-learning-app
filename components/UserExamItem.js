@@ -6,7 +6,6 @@ import instance from '../axios-instance';
 
 const UserExamItem = ({ item }) => {
   const [totalQuestion, setTotalQuestion] = useState(0);
-  console.log('user exam item', item);
   const getQuestion = async () => {
     const result = await instance.get('/questions', {
       params: {
@@ -20,28 +19,7 @@ const UserExamItem = ({ item }) => {
     getQuestion();
   }, []);
   return (
-    <TouchableOpacity
-      style={styles.container}
-      // onPress={() =>
-      //   router.push({
-      //     pathname: '/exam',
-      //     params: {
-      //       examId: item.id,
-      //     },
-      //   })
-      // }
-    >
-      {/* <Image
-        source={{
-          uri: item.banner,
-        }}
-        style={{
-          resizeMode: 'contain',
-          height: 80, // Adjust image height as needed
-          width: 120, // Adjust image width as needed
-          borderRadius: 20, // Adjust border radius as needed
-        }}
-      /> */}
+    <TouchableOpacity style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.courseName}>{item?.exam?.title}</Text>
         <Text>

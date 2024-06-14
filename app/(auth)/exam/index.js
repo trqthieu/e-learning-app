@@ -69,8 +69,7 @@ export default function Page() {
   };
   const handleCheckAnswer = useCallback(() => {
     // if (answerList?.length === dataQuestion?.length && !checkAnswer) {
-    setCheckAnswer(true);
-    handleSubmit(answerList.filter(item => item.isCorrect).length);
+
     // }
     // setTrueAnswerList(dataQuestion);
     // if (!checkAnswer) {
@@ -79,6 +78,9 @@ export default function Page() {
     // }
     if (checkAnswer) {
       router.back('/home');
+    } else {
+      setCheckAnswer(true);
+      handleSubmit(answerList.filter(item => item.isCorrect).length);
     }
   }, [answerList?.length, dataQuestion?.length, checkAnswer]);
   const fetchCourse = async () => {

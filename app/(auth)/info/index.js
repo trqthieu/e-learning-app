@@ -24,6 +24,7 @@ const ExamReportPage = () => {
         const userExam = responseData?.data?.filter(
           userExam => userExam?.user?.id === user?.id
         );
+        console.log('responseData', responseData);
         setExamResults(userExam);
       } catch (error) {
         console.error('Error fetching exam results:', error);
@@ -37,7 +38,7 @@ const ExamReportPage = () => {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Exam result',
+          title: 'Kết quả thi',
         }}
       />
       <ScrollView

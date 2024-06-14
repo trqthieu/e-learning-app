@@ -6,35 +6,44 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  TextInput,
+  Alert,
+  Modal,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
+import instance from '../../../axios-instance';
+import { getUser } from '../../../storage';
 
-// Mock flashcard data
-const mockFlashcards = [
-  { id: 1, title: 'Flashcard 1', content: 'Content for flashcard 1' },
-  { id: 2, title: 'Flashcard 2', content: 'Content for flashcard 2' },
-  { id: 3, title: 'Flashcard 3', content: 'Content for flashcard 3' },
-  { id: 4, title: 'Flashcard 4', content: 'Content for flashcard 4' },
-  { id: 5, title: 'Flashcard 5', content: 'Content for flashcard 5' },
-  { id: 6, title: 'Flashcard 6', content: 'Content for flashcard 6' },
-  { id: 7, title: 'Flashcard 7', content: 'Content for flashcard 7' },
-  { id: 8, title: 'Flashcard 8', content: 'Content for flashcard 8' },
-];
+const AUTH_TOKEN =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE4MzUzNDQzLCJleHAiOjE3MTg0Mzk4NDN9.nL4cN8v0fH9x4VZKPAnEZ4_edWzjj0OzTCmwQs42tXY';
 
 const FlashcardScreen = () => {
   const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newFlashcard, setNewFlashcard] = useState({
+    name: '',
+    description: '',
+  });
   const router = useRouter();
 
   useEffect(() => {
-    // Simulate fetching data
     const fetchFlashcards = async () => {
       try {
-        // Simulate network request
-        setTimeout(() => {
-          setFlashcards(mockFlashcards);
-          setLoading(false);
-        }, 1000); // Simulate a delay of 1 second
+        const user = await getUser();
+        const response = await instance.get(
+          '/flashcards?order=ASC&page=1&take=50'
+        );
+        console.log('response.data.data', response.data.data);
+        const fetchedFlashcards = response.data.data
+          .filter(i => i?.author?.id === user?.id)
+          .map(item => ({
+            id: item.id,
+            title: item.name,
+            content: item.description,
+          }));
+        setFlashcards(fetchedFlashcards);
+        setLoading(false);
       } catch (error) {
         console.log(error);
         Alert.alert('Error', 'Failed to load flashcards. Please try again.');
@@ -49,13 +58,54 @@ const FlashcardScreen = () => {
     router.push(`/flashcard-detail/${flashcard.id}`);
   };
 
+  const handleAddFlashcard = async () => {
+    try {
+      const user = await getUser();
+      const response = await instance.post('/flashcards', {
+        name: newFlashcard.name,
+        description: newFlashcard.description,
+        authorId: user?.id, // Assuming authorId is 1
+      });
+      const addedFlashcard = {
+        id: response.data.id,
+        title: response.data.name,
+        content: response.data.description,
+      };
+      setFlashcards([...flashcards, addedFlashcard]);
+      setModalVisible(false);
+      setNewFlashcard({ name: '', description: '' });
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error', 'Failed to add flashcard. Please try again.');
+    }
+  };
+
+  const handleDeleteFlashcard = async id => {
+    try {
+      console.log(id);
+      await instance.delete(`/flashcards/${id}`);
+      setFlashcards(flashcards.filter(flashcard => flashcard.id !== id));
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error', 'Failed to delete flashcard. Please try again.');
+    }
+  };
+
   const renderFlashcard = ({ item }) => (
-    <TouchableOpacity
-      style={styles.flashcard}
-      onPress={() => handleFlashcardPress(item)}
-    >
-      <Text style={styles.flashcardText}>{item.title}</Text>
-    </TouchableOpacity>
+    <View style={styles.flashcardContainer}>
+      <TouchableOpacity
+        style={styles.flashcard}
+        onPress={() => handleFlashcardPress(item)}
+      >
+        <Text style={styles.flashcardText}>{item.title}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => handleDeleteFlashcard(item.id)}
+      >
+        <Text style={styles.deleteButtonText}>Delete</Text>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -65,7 +115,6 @@ const FlashcardScreen = () => {
           title: 'Danh sách thẻ ôn luyện',
         }}
       />
-      {/* <Text style={styles.title}>Danh sách thẻ ôn luyện</Text> */}
       {loading ? (
         <ActivityIndicator size='large' color='#007bff' />
       ) : (
@@ -76,6 +125,54 @@ const FlashcardScreen = () => {
           contentContainerStyle={styles.list}
         />
       )}
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.addButtonText}>Thêm thẻ ôn luyện</Text>
+      </TouchableOpacity>
+      <Modal
+        visible={modalVisible}
+        animationType='slide'
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.formTitle}>Thêm thẻ ôn luyện mới</Text>
+            <TextInput
+              style={styles.input}
+              placeholder='Tên thẻ'
+              value={newFlashcard.name}
+              onChangeText={text =>
+                setNewFlashcard({ ...newFlashcard, name: text })
+              }
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Nội dung'
+              value={newFlashcard.description}
+              onChangeText={text =>
+                setNewFlashcard({ ...newFlashcard, description: text })
+              }
+            />
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Hủy</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={handleAddFlashcard}
+              >
+                <Text style={styles.buttonText}>Thêm</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -95,20 +192,88 @@ const styles = StyleSheet.create({
   list: {
     paddingBottom: 20,
   },
-  flashcard: {
-    flex: 1,
+  flashcardContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginVertical: 10,
     padding: 20,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  flashcard: {
+    flex: 1,
   },
   flashcardText: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  deleteButton: {
+    marginLeft: 10,
+    padding: 10,
+    backgroundColor: '#ff0000',
+    borderRadius: 8,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  addButton: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#007bff',
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  formTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    paddingLeft: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  modalButton: {
+    flex: 1,
+    backgroundColor: '#007bff',
+    borderRadius: 8,
+    padding: 10,
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

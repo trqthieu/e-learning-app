@@ -13,20 +13,6 @@ import UserExamItem from './UserExamItem';
 const UserExamList = ({ data }) => {
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <Text style={styles.title}>Popular Courses</Text>
-        <TouchableOpacity>
-          <Text></Text>
-        </TouchableOpacity>
-      </View> */}
-      {/* <FlatList
-        data={data}
-        renderItem={({ item }) => <CourseCardSmall item={item} />}
-        keyExtractor={item => item.id}
-        key={item => item.id}
-        contentContainerStyle={{ rowGap: 10 }}
-        showsVerticalScrollIndicator={false}
-      /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         {data?.map((item, index) => (
           <UserExamItem item={item} key={index} />

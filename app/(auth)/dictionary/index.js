@@ -60,8 +60,8 @@ const DictionaryScreen = () => {
         <Button title='Tìm kiếm' onPress={searchDictionary} />
       )}
       <ScrollView>
-        {results.map(result => (
-          <View key={result.id} style={styles.resultItem}>
+        {results.map((result, rIndex) => (
+          <View key={rIndex} style={styles.resultItem}>
             <Text style={styles.word}>{result.word}</Text>
             <View style={styles.pronunciationContainer}>
               <TouchableOpacity onPress={() => playSound(result.pronunciation)}>
